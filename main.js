@@ -2,6 +2,9 @@ const electron = require('electron')
 const { app, BrowserWindow,ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+const https = require('https')
+const versionUrl = 'https://raw.githubusercontent.com/peng887/eazy/master/package.json'
 
 let onlineStatusWindow
 const createWindow = () => {
@@ -17,6 +20,20 @@ const createWindow = () => {
 }
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
 app.on('ready',createWindow)
+
+https.get(versionUrl,(res) => {
+  res.on("data",(data) => {
+    let versionOnline = JSON.parse(data.toString()).version
+    fs.readFile('./package.json',(err,res) => {
+      let versionOutline = JSON.parse(res.toString()).version
+      if (versionOnline != versionOutline) {
+        console.info("有更新")
+      } else {
+        console.info("没有更新，请使用")
+      }
+    })
+  })
+})
 
 let isOnline = true
 let isOutline = false

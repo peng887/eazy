@@ -1,0 +1,168 @@
+*
+{
+    margin: 0 auto;
+    background: white;
+}
+html,body
+{
+    width: 100%;
+    height: 100%;
+}
+.web_box{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.web_box img{
+    width:100%;
+}
+.left_shuimo
+{
+    width: 21%;
+    height: 100%;
+    flex-shrink: 0;
+}
+input{
+  outline: none;
+}
+.codeImgWrap{
+  width: 114px;
+  height: 114px;
+}
+.codeImgWrap img{
+  width: 100%;
+  height: 100%;
+}
+.left_shuimo_image
+{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.left_shuimo_image>.left_shuimo_img{
+    position: absolute;
+    bottom: 0;
+    /*right: 180px;*/
+}
+.left_shuimo_image img
+{
+    width:100%;
+
+}
+.webs_scan
+{
+    width: 21%;
+    min-width: 404px;
+    min-height: 294px;
+    background: #b5b5b5;
+    margin-top: 54px;
+    border-radius: 5px;
+    /*position:absolute;*/
+    /*bottom: 0;*/
+    display: none;
+}
+.webs_scan img
+{
+    margin-top: 34px;
+}
+.web_code
+{
+    background: #b5b5b5;
+    padding-top: 36px;
+    border-radius: 5px;
+}
+.webs_logins
+{
+    background: #b5b5b5;
+    padding-top: 34px;
+    font-size: 24px;
+}
+.webs_home_page
+{
+    text-align: center;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+.webs_logo
+{
+    padding-top: 4%;
+}
+.webs_headline
+{
+    font-size: 30px;
+    color: #282828;
+    margin-top: 44px;
+}
+.webs_center
+{
+  /* width: 21%; */
+  flex:1;
+min-width: 404px;
+min-height: 294px;
+background: #fff;
+box-shadow: 0 2px 8px #bbb;
+margin-top: 4%;
+border-radius: 5px;
+/* position: relative; */
+}
+.webs_login
+{
+    padding-top: 20px;
+    color: #333333;
+    background: #fff;
+    font-size: 24px;
+}
+input,button
+{
+    width: 334px;
+    height: 40px;
+    border: none;
+    background: #f4f4f4;
+    color: #333;
+    border-radius: 5px;
+    margin-top: 44px;
+    outline: none;
+}
+.webs_tel
+{
+    padding-left: 18px;
+    /* border: 2px solid #626262; */
+    font-size: 14px;
+}
+#loginButton{
+  cursor: pointer;
+  color: #fff;
+  background: #f55d5d;
+  font-size: 14px;
+}
+button
+{
+    margin-top: 44px;
+}
+.webs_qr_code
+{
+    margin-top: 6%;
+}
+.webs_qr_code>div{
+    margin:0 20px;
+}
+/* .webs_qr_code img
+{
+    margin: 0 42px;
+} */
+.webs_qr_code p
+{
+    margin-top: 12px;
+    color: #333;
+}
+.right_shuimo{
+    width:21%;
+    height: 100%;
+}

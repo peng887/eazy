@@ -1,0 +1,426 @@
+.weui-cell__bd
+{
+    position: relative;
+}
+.weui-cell__bd img
+{
+    display: none;
+    position: absolute;
+    right: 26px;
+    top: 14px;
+}
+.web_cont_box::-webkit-scrollbar {
+    display: inline-block;
+    width: 16px;
+    height: 100%;
+    background-color: #F5F5F5;
+
+}
+.web_cont_box::-webkit-scrollbar-thumb{
+    width: 16px;
+    height: 20px;
+    background: #f55d5d;
+}
+.webs_section
+{
+    overflow: hidden;
+}
+.web_box
+{
+    position: relative;
+}
+.webs_header
+{
+    width:100%;
+    height: 80px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+}
+.web_header_con
+{
+    width: 62%;
+    min-width: 1190px;
+    height: 100%;
+    margin:0 auto;
+}
+.webs_behind
+{
+    font-size: 16px;
+    position: relative;
+}
+.webs_behind img
+{
+    width:22px;
+    height: 24px;
+    margin-right: 12px;
+}
+.webs_exit
+{
+cursor: pointer;
+background: #fafafa;
+border-radius: 4px;
+border: 1px solid #ddd;
+padding: 6px 18px;
+outline: none;
+margin-left: 20px;
+}
+.webs_yike
+{
+    width: 50px;
+    height: 50px;
+}
+.flexAli{
+  display: flex;
+    align-items: center;
+}
+.webs_class
+{
+    width: 120px;
+    height: 34px;
+    margin-left: 15px;
+}
+.webs_yike img , .webs_class img{
+  width:100%;
+  height: 100%;
+}
+.webs_center
+{
+height: 94%;
+/* height: 536px; */
+max-width: 1190px;
+width: 1190px;
+background: #eaeaea;
+border-radius: 5px;
+margin: 10px auto;
+position: relative;
+    padding: 0 20px;
+}
+.webs_plan
+{
+    margin: 16px 40px;
+    font-size: 20px;
+}
+.web_cont_box
+{
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+/*.webs_first*/
+/*{*/
+    /*margin-left: 192px;*/
+/*}*/
+/*.webs_second*/
+/*{*/
+    /*margin-left: 86px;*/
+/*}*/
+.webs_system
+{
+    border-bottom: 2px solid #ffffff;
+    margin: 0 74px;
+    line-height: 80px;
+    position: relative;
+}
+.webs_system span
+{
+    float: right;
+    line-height: 68px;
+}
+.webs_progress
+{
+    margin-top: 16px;
+}
+.webs_detail
+{
+    width: 148px;
+    height: 142px;
+    background-size: 100% 100%;
+    margin: 0 20px;
+    border-radius: 5px;
+}
+.webs_detail img
+{
+    width: 148px;
+}
+.web_table_con
+{
+    width: 186px;
+    margin-left: 32px;
+    height: 44px;
+    background: #fafafa;
+    line-height: 44px;
+    border-radius: 5px;
+}
+.no_web_cont_box{
+
+}
+.no_web_cont_box img{
+    display: block;
+    width: 300px;
+    margin: 100px auto 40px;
+}
+.no_web_cont_box p{
+    width: 310px;
+    margin: 0 auto;
+}
+.webs_logger
+{
+    width: 224px;
+}
+.web_table_con select{
+  background: url(../img/3j.png) no-repeat 196px center;
+}
+.web_table_con select,option
+{
+  /* height: 100%; */
+color: #333333;
+/* padding-left: 32px; */
+z-index: 0;
+/* height: 100%; */
+color: #333333;
+/* padding-left: 32px; */
+z-index: 0;
+background-color: #fafafa;
+padding: 0 10px;
+width: 100%;
+border-radius: 3px;
+font-size: 16px;
+}
+.webs_short option
+{
+    padding-left: 22px;
+    width: 186px
+}
+.webs_versions
+{
+    width: 100px;
+}
+.webs_location
+{
+  position: fixed;
+top: 150px;
+right: 0;
+cursor: pointer;
+}
+.webs_location p
+{
+    margin-top: 20px;
+}
+/* 客服系统二维码 */
+.webs_service
+{
+    position: fixed;
+    top: 170px;
+    right: 30px;
+    cursor: pointer;
+}
+.el-dialog {
+    position: relative;
+}
+.content {
+    height: 160px;
+}
+.img-erweima {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+.first-line {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+.second-line {
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.webs_topest
+{
+    width: 100%;
+    height: 100%;
+    background: rgba(51,51,51,.3);
+    position: absolute;
+    top: 0;
+    display: none;
+}
+.webs_reveal
+{
+    width: 464px;
+    height: 352px;
+    background: white;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    font-size: 24px;
+    top: 50%;
+    transform:translate(-50%,-50%);
+    padding: 74px 62px 0 62px;
+    border-radius: 10px;
+}
+.webs_switch
+{
+    margin-top: 36px;
+}
+span.webs_start{
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    border-radius: 10px;
+}
+.start_left{ float: left;}
+.start_right{ float: right;}
+span
+{
+    width: 160px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    display: inline-block;
+}
+.webs_start
+{
+    background: #fe7e7e;
+}
+.webs_intelligence
+{
+    background: #c1c1c1;
+    margin-left: 10px;
+}
+.webs_code
+{
+    margin: 0 auto;
+    width: 464px;
+    height: 352px;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    text-align: center;
+}
+.webs_codes
+{
+    padding-top: 40px;
+    text-align: center;
+}
+.webs_code p
+{
+    margin-top: 34px;
+}
+.webs_begin
+{
+    margin: 0 auto;
+    width: 464px;
+    height: 352px;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    text-align: center;
+    border-radius: 10px;
+}
+.webs_begin p
+{
+    text-align: left;
+    padding-left: 100px;
+    font-size: 18px;
+}
+.webs_begin p.pcenter{
+    text-align:center;
+    padding: 0;
+    margin-bottom: 20px;
+}
+.webs_close
+{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+}
+.webs_close img{
+    width: 100%;
+}
+.webs_personal
+{
+    width: 264px;
+    height: 252px;
+    background: #f4f4f4;
+    position: absolute;
+    top: 20px;
+    left: -80px;
+    text-align: center;
+    z-index: 2;
+}
+.webs_personal img
+{
+    width: 102px;
+    height: 102px;
+    margin-top: 10px;
+}
+.webs_align
+{
+    margin-top: 36px;
+}
+.webs_cover
+{
+  width: 100%;
+min-height: 80px;
+background: white;
+position: absolute;
+top: 0;
+color: black;
+line-height: 80px;
+display: none;
+}
+.webs_ar
+{
+    margin-left: 30px;
+}
+.webs_just
+{
+    margin-top: 14px;
+    text-align: center;
+}
+.webs_starts
+{
+    margin-top: 24px;
+}
+.btnWrap{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.marginRight30{
+  margin-right: 30px;
+}
+.webs_change,.webs_changes
+{
+    width: 42px;
+    height: 42px;
+}
+.webs_text
+{
+  width: 100px;
+height: 60px;
+line-height: 60px;
+text-align: center;
+display: inline-block;
+border: 2px solid #333333;
+margin-right: 22px;
+font-size: 14px;
+}
+.webs_start,.webs_mes,.webs_close,.webs_change,.webs_changes,
+.webs_location,.web_table_con select,.webs_exit{
+    cursor: pointer;
+}

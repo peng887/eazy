@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>书写中国 | 易练字</title>
+    <link href="/classroom_img/favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="../bower_components/weui/dist/style/weui.css"/>
+    <link rel="stylesheet" href="../bower_components/weui/dist/example/example.css"/>
+    <link rel="stylesheet" href="../classroom_css/public.css">
+    <link rel="stylesheet" href="../classroom_css/curriculum_arrangement_plan_larg.css">
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="../classroom_js/route.js"></script>
+    <script src="../bower_components/weui/dist/example/zepto.min.js"></script>
+    <script src="../bower_components/weui.js/dist/weui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        const { ipcRenderer } = require('electron')
+        const updateOnlineStatus = () => {
+          ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
+        }
+        window.addEventListener('online',  updateOnlineStatus)
+        window.addEventListener('offline',  updateOnlineStatus)
+        updateOnlineStatus()
+    </script>
+    <style>
+      .classListIcon{
+        width: 90px;
+        height: 90px;
+      }
+      .version{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        font-size: 12px;
+        padding:2px 5px;
+        color: #888;
+      }
+      .btn{
+        cursor: pointer;
+background: #fafafa;
+border-radius: 4px;
+border: 1px solid #ddd;
+padding: 6px 18px;
+outline: none;
+margin-left: 20px;
+        background: #f55d5d;
+        color: #fff;
+        border:none;
+      }
+    </style>
+</head>
+<body>
+<div class="web_box weui-flex flex_column" id="app">
+    <div class="webs_header ">
+        <div class="web_header_con weui-flex flex-ali_i_center flex_jus_between">
+            <div class=" weui-flex flex-ali_i_center flexAli">
+                <div class="webs_yike">
+                    <img src="../classroom_img/LOGO.png" alt="">
+                </div>
+                <div class="webs_class">
+                    <img src="../classroom_img/LOGOwenzi.png" alt="">
+                </div>
+            </div>
+            <div class="webs_behind weui-flex flex-ali_i_center">
+                <img src="../classroom_img/geren.png" alt="">
+                <button class="btn" @click="webs_location">课程列表</button>
+                <button class="webs_exit" @click="webs_exit"> 退出</button>
+                <div class="webs_personal web_hide" :class="{'web_show':!personal}">
+                    <img src="../classroom_img/touxiang.png" alt="">
+                    <div class="webs_align">
+                        <p>姓名:</p>
+                        <p>学校: </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="webs_section weui-flex flex_column weui-flex__item">
+        <div class="webs_center">
+            <div class="webs_plan">排课计划</div>
+
+            <div id="wrap" v-on:scroll.passive="onScroll" class="webs_progress weui-flex__item weui-flex webs_double flex_wrap" style="height:none;">
+                <div class="webs_detail   js_details" v-for="(item,index) in data.arr" @click="js_details(item,index)">
+                    <div class="webs_typeface">
+                        <img v-if="item.curriculumState == 0" src="../classroom_img/beijing.png" alt=""/>
+                        <img v-else-if="item.curriculumState == 1" src="../classroom_img/beijing2.png" alt=""/>
+                        <img v-else-if="item.curriculumState == 3" src="../classroom_img/nono.png" alt=""/>
+                        <img v-else-if="item.curriculumState == 4" src="../classroom_img/beijing2.png" alt=""/>
+                    </div>
+                    <div class="webs_content">
+                        <p>时间: {{item.lectureDate}}</p>
+                        <p>名称: {{item.courseCaption}}</p>
+                        <p>班级: {{item.lectureClasses}}
+                            <span v-if="item.curriculumState == 0" class="sp1" style="color:green">已讲课</span>
+                            <span v-else-if="item.curriculumState == 1" class="sp2" style="color:red">待讲课</span>
+                            <span v-else-if="item.curriculumState == 3" class="sp3" style="color:gray">未讲课</span>
+                            <span v-else-if="item.curriculumState == 4" class="sp2" style="color:red">待讲课</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <div class="webs_topest " :class="{'web_show':currentCurriculum}">
+        <div class="webs_reveal">
+            <p>您已经确认开始讲课，直接讲课请点击 "开始讲课" ，小程序操控请点击 "扫码控制"  获取二维码。</p>
+            <div class="webs_switch">
+                <span class="webs_start" @click="js_webs_start">开始讲课</span>
+                <span class="webs_intelligence" @click="js_webs_intelligence">智控课堂</span>
+                <span class="webs_close" @click="webs_close"> <img src="../classroom_img/X.png" alt=""/></span>
+                <div class="webs_code">
+                    <div class="webs_codes"><img src="../classroom_img/B2wm.png" alt=""/></div>
+                    <p>扫码进入智控课堂</p>
+                    <div class="webs_close" @click="webs_close"> <img src="../classroom_img/X.png" alt=""/></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div></div>
+</div>
+<span class="version">书写中国-v1.5.0</span>
+</body>
+<script>
+    $(function()
+    {
+        var app = new Vue({
+            el: '#app',
+            data: {
+                personal:true,
+                currentCurriculum:false,
+                currentCurriculumbegin:false,
+                data:{
+                    "flag":true,
+                    "pageIndex":0,
+                    "arr":[],
+                    "state": 1,
+                    "message": "成功",
+                    "count": null,
+                    "data": {
+                        "messages": [
+
+                        ],
+                        "currentCurriculum": null
+                    }
+                },
+                curriculumId:'',
+                role:0
+            },
+            mounted:function(){
+              let that = this
+              that.updata()
+            },
+            methods:{
+               onScroll:function(){
+                 console.info("滚动")
+                 let wrapHeight = document.getElementById("wrap").offsetHeight
+                 let scrollTop = document.getElementById("wrap").scrollTop
+                 let docHeight = wrapHeight + scrollTop
+                 let x=docHeight-wrapHeight
+                 if((x-scrollTop)<100){
+
+                   var that = this;
+
+                   if(that.data.flag == true){
+                     that.data.pageIndex++
+                     that.updata()
+                   }
+                 }
+               },
+               updata:function(){
+                 var that = this;
+                 that.data.flag = false
+                 var href = window.location.href;
+                 // var teacher_id = href.substr(href.indexOf("=")+1);
+                 var teacher_id = sessionStorage.teacher_id;
+                 that.teacher_id = teacher_id;
+
+                 $.ajax({
+                     type: 'POST',
+                     url: "https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/getCurriculum.do",
+                     data: {
+                       paging:that.data.pageIndex,
+                       teacher_id:that.teacher_id
+                     },
+                     dataType : 'json',
+                     success:function(res){
+                         if(res.state === 1 && res.data.messages.length !=0){
+                              that.data.flag = true
+                             for(var i=0;i<res.data.messages.length;i++){
+                               that.data.arr.push(res.data.messages[i])
+                             }
+
+                             console.info(that.data)
+                             if(res.currentCurriculum != null)
+                             {
+                                 that.currentCurriculum = true;
+                                 that.currentCurriculumbegin = true;
+                             }
+                         }
+                     }
+                 })
+               },
+                webs_exit:function()
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/signOut.do",
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.state == 1){
+                                location.href = 'index.html';
+                            }
+                        },
+                        error: function (res) {
+                            console.log(res)
+                        }
+                    });
+                },
+                /**
+                 * 点击标题显示是否上课弹窗
+                 */
+                js_details:function(item,index){
+                    console.info(index)
+                    this.curriculumId = item.curriculum_id
+                    //获取当前时间
+                    var d=new Date();
+                    var vYear = d.getFullYear();
+                    var vMon = d.getMonth() + 1;
+                    var vDay = d.getDate();
+                    var h = d.getHours();
+                    var m = d.getMinutes();
+                    var se = d.getSeconds();
+                    var dateTime=vYear+'/'+vMon+'/'+vDay+'/'+' '+h+':'+m+':'+se;
+
+                    var that = this;
+					$.ajax({  //限制是否能点击
+						type:"post",
+						url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/hint.do",
+						data:{
+							curriculum_id:item.curriculum_id
+						},
+						dataType:'json',
+						success:function(data){
+							console.info(data)
+							if(data.state == 1){
+								if(item.curriculumState == 1){  //is not my--default do↓
+								  $.ajax({
+									type:'get',
+									url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/updateCurriculum.do",
+									dataType: 'json',
+									data:{
+									  curriculumState:item.curriculumState,
+									  curriculum_id:item.curriculum_id,
+									  dateTime:dateTime
+									},
+									success:function(data){
+
+									}
+								  })
+								}
+								that.currentCurriculum = true;
+								sessionStorage.js_webs_systemText = ""
+								sessionStorage.js_webs_systemText = JSON.stringify(that.data.arr[index]) //is not my--default do -End
+							}else{
+								that.$alert(data.data.massage,"提示")
+							}
+						}
+					})
+
+
+                },
+                /**
+                 * 开始讲课，检索当前课程信息
+                 */
+                js_webs_start:function()
+                {
+                    $('.webs_begin').show();
+                    var that = this;
+                    var type = 0
+                    var role = 1
+                    that.buryingPoint(type)
+                    that.currentCurriculumbegin = true;
+                    window.location.href = "begin_class.html?curriculumId="+that.curriculumId;
+                    // $.ajax({
+                    //     type: 'POST',
+                    //     url: "https://www.ziqiangzili.com/"+largeRouteDo+"/collectFour/addCollectFour.do",
+                    //     dataType: 'json',
+                    //     data:{
+                    //         curriculum_id:that.curriculumId,
+                    //         type:0
+                    //     },
+                    //     success: function (res) {
+                    //        console.log(res)
+                    //     },
+                    //     error: function (res) {
+                    //         console.log(res)
+                    //     }
+                    // });
+                },
+                /**
+                 *  进入智控课堂，生成通讯链接二维码
+                 */
+                js_webs_intelligence:function()
+                {
+                    var that = this;
+                    var type = 1
+                    that.buryingPoint(type)
+                    window.location.href = "js_video_begin_class.html?teacher_id="+that.teacher_id+'-curriculumId-' +that.curriculumId;
+                },
+                // 埋点方法
+                buryingPoint:function(type) {
+                    console.log(this.curriculumId,this.teacher_id)
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
+                        data: {role:1,curriculum_id:this.curriculumId,type:type},
+                        dataType: 'json',
+                        success: function (res) {
+                            console.log(res)
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                /**
+                 * 点击关闭，关闭弹窗
+                 */
+                webs_close:function () {
+                    var that = this;
+                    that.currentCurriculum = false;
+                    that.currentCurriculumbegin = false;
+                    $('.webs_topest').hide();
+                    $('.webs_begin').hide();
+                    $('.webs_code').hide()
+                },
+                /**
+                 *  跳到课程列表
+                 */
+                webs_location:function () {
+                    var that = this;
+                    window.location.href="curriculums_table.html";
+                },
+                /**
+                 * 显示用户信息
+                 */
+                webs_authority:function () {
+                    this.personal = !this.personal;
+                }
+            }
+        });
+    });
+
+</script>
+</html>

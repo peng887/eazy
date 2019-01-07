@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>书写中国 | 易练字</title>
+    <link href="/classroom_img/favicon.ico" rel="shortcut icon"/>
+    <link rel="stylesheet" href="../classroom_css/weui.css"/>
+    <link rel="stylesheet" href="../classroom_css/example.css"/>
+    <link rel="stylesheet" href="../classroom_css/public.css">
+    <link rel="stylesheet" href="../classroom_css/video.css">
+    <link rel="stylesheet" href="../classroom_css/begin_class.css">
+    <script src="../classroom_js/video.js"></script>
+    <script src="../classroom_js/videojs-contrib-hls.js"></script>
+    <script src="../classroom_js/md5.js"></script>
+    <script src="../classroom_js/route.js"></script>
+    <script src="../classroom_js/jquery-1.8.0.js"></script>
+    <script src="../classroom_js/zepto.min.js"></script>
+    <!-- <script src="../js/vue-vide.js"></script> -->
+
+    <script src="../classroom_js/weui.js"></script>
+    <script src="../classroom_js/jweixin.js"></script>
+    <script src="../classroom_js/base64.js"></script>
+    <script>
+    const { ipcRenderer } = require('electron')
+    const updateOnlineStatus = () => {
+      ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
+    }
+    window.addEventListener('online',  updateOnlineStatus)
+    window.addEventListener('offline',  updateOnlineStatus)
+    updateOnlineStatus()
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+    <!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+
+
+    <!--<style media="screen">-->
+    <!--video::-webkit-media-controls-fullscreen-button{-->
+    <!--display: none;-->
+    <!--overflow: hidden;-->
+    <!--}-->
+    <!--video::-internal-media-controls-download-button-->
+    <!--{-->
+    <!--display: none;-->
+    <!--overflow: hidden;-->
+    <!--}-->
+    <!--video::-internal-media-controls-overflow-button-->
+    <!--{-->
+    <!--display: none;-->
+    <!--overflow: hidden;-->
+    <!--}-->
+    <!--video::-webkit-media-controls-mute-button-->
+    <!--{-->
+    <!--display: none;-->
+    <!--overflow: hidden;-->
+    <!--}-->
+    <!--</style>-->
+</head>
+<style>
+    .vjs-resize-manager{
+        display: none;
+    }
+    .vjs-time-tooltip{
+        display: none!important;
+    }
+    .hide{
+      display: none!important;
+    }
+    .notclick{
+      pointer-events: none;
+    }
+    .video-js .vjs-mouse-display:after, .video-js .vjs-play-progress:after{
+      display: none!important;
+    }
+      .version{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        font-size: 12px;
+        padding:2px 5px;
+        color: #888;
+      }
+</style>
+<body>
+<div class="web_box weui-flex" id="app">
+    <div class="webs_left js_webs_left">
+
+        <div>
+            <p class="edition"></p>
+            <p class="webs_img"><img src="../classroom_img/shang+.png" alt=""></p>
+            <div class="words-box"></div>
+            <p class="webs_img webs_imm"><img src="../classroom_img/xia+.png" alt=""></p>
+            <div class="webs_button web_videos web_videos_jiegou">播放讲解</div>
+            <div class="webs_button web_videos web_videos_shuxie">播放演示</div>
+            <div class="webs_button webs_exit">退出</div>
+        </div>
+
+    </div>
+
+
+    <div class="hide_webs_hide">
+        <span class="hide_webs_hide_show">隐藏</span>
+    </div>
+
+    <div class="webs_right js_webs_right">
+
+        <!--<video id="video" width="1" height="1"  src="" controls="controls" poster="../img/000111.png"></video>poster="../img/000111.png"-->
+        <!--https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8-->
+        <!-- <video id="shuxiev" class="web_hide video-js vjs-default-skin vjs-big-play-centered " controls="controls"
+               poster="" preload="auto">
+            <source src="" type="application/x-mpegURL">
+        </video> -->
+        <video id="shuxiev" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" width="1080" height="708" data-setup='{"autoplay":true}'>
+            <source id="source" src=""  type="application/x-mpegURL">
+            <!-- <source id="source" src="https://www.ziqiangzili.com/ceShiKeTang/getM3u8.do?auth=82004478c4de4e5aaf2f2f055cc906ee&teacher_id=43&MD5_video_Name=f7caf992834b3137"  type="application/x-mpegURL"> -->
+        </video>
+        <div class="boximg">
+            <img src="../classroom_img/shuxieLogo.jpg" alt="" class="js_play_video">
+        </div>
+
+
+    </div>
+    <span class="version">书写中国-v1.5.0</span>
+    <!-- loading -->
+    <!--<div class="loading_parcel web_hide" class="">-->
+        <!--<div class="weui-flex flex_column flex_jus_center flex-ali_i_center">-->
+            <!--<div class="">-->
+                <!--<div class="loader">-->
+                    <!--<div class="loader-inner ball-spin-fade-loader">-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                        <!--<div></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!-- loading -->
+</div>
+<script src="../classroom_js/video.js"></script>
+<script src="../classroom_js/videojs-contrib-hls.js"></script>
+</body>
+<script>
+    $(function () {
+        var myVideo = null;
+        var js_webs_systemText = {
+            data: [
+                {character_id: 1, character: "字", material_id: 0, characterState: null, imgUrl: ""},
+
+                {character_id: 2, character: "强", material_id: 0, characterState: null, imgUrl: ""},
+
+                {character_id: 3, character: "字", material_id: 0, characterState: null, imgUrl: ""},
+
+                {character_id: 4, character: "立", material_id: 0, characterState: null, imgUrl: ""}
+            ],
+            edition: "字强字立易课堂",
+            materialState: 0,
+            material_id: 46,
+            pid: 45,
+            textBootMessage: null,
+            textBootVersions: null,
+            url: null,
+
+        };
+        var app = {
+            personal: true,
+            js_chang: null,
+            selece: null,
+            classData: null,
+            couresData: null,
+            loading_parcel_show: false,
+            js_webs_systemText: null,
+            scroll: 0,
+            imgUrl: "",
+            character_id: "",
+            character: "",
+            videourl: '',//视频地址
+            scroll: 0,
+            typeId:0,
+
+            mounted: function () {
+
+                var that = this;
+
+                //myVideo.src("https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8");
+                var href = window.location.href;
+                var curriculumId = href.substr(href.indexOf("=") + 1);
+                // var role = href.split('=')[1].split('-')[0]
+                // var curriculumId = href.split('=')[1].split('-')[2]
+                console.log(href,curriculumId.length)
+                var teacher_id = sessionStorage.teacher_id;
+                //console.log(teacher_id);
+                that.userId = teacher_id;
+                var js_webs_systemText1 = sessionStorage.getItem("js_webs_systemText");
+                js_webs_systemText = JSON.parse(js_webs_systemText1);
+                that.imgUrl = js_webs_systemText.data[0].imgUrl;
+                that.character_id = js_webs_systemText.data[0].character_id;
+                that.character = js_webs_systemText.data[0].character;
+
+                that.edition = js_webs_systemText.edition;
+                that.character_list = [];
+                for (var i = 0; i < js_webs_systemText.data.length; i++) {
+                    var objectCharacter = {};
+                    objectCharacter = {
+                        character_id: js_webs_systemText.data[i].character_id,
+                        character: js_webs_systemText.data[i].character
+                    };
+                    that.character_list.push(objectCharacter)
+                    $('.words-box').append('<p data-type='+js_webs_systemText.data[i].characterState+' class="webs_character ' + (i == 0 ? 'webs_red' : '') + '" class="web_text_this" style="margin-left: 0">' + js_webs_systemText.data[i].character + '</p>')
+
+
+                }
+                console.log(js_webs_systemText)
+                console.log(js_webs_systemText.courseCaption)
+                // $(".js_play_video").attr("src", that.imgUrl);
+                // $('.edition').text(js_webs_systemText.courseCaption)
+                if(js_webs_systemText.courseCaption != null){
+                   $('.edition').text(js_webs_systemText.courseCaption);
+                }else if(js_webs_systemText.edition != null){
+                    $('.edition').text(js_webs_systemText.edition)
+                }else{
+                    $('.edition').text('智控课堂')
+                }
+
+                myVideo = videojs('shuxiev', {
+                    bigPlayButton : false,
+                    loop: false,
+                    poster: '',//播放前显示的图片
+                    preload: 'none',//预加载
+                    control: false,
+                    errorDisplay: false,
+                })
+                //myVideo.poster(that.imgUrl);
+                //可以播放后关闭遮罩
+                myVideo.on('canplay', function () {
+                    $('.loading_parcel').removeClass('web_show');
+                })
+                $('#shuxiev').hide().css({'width': '100%', 'height': '100%'});
+
+                //选字
+                $('.webs_character').click(function () {
+                    let type = $(this).attr("data-type");
+                    that.methods.js_character($(this)[0], $('.webs_character').index(this), js_webs_systemText, that.character_id, $(this),type);
+                })
+                //书写
+                $('.web_videos_shuxie').click(function () {
+                    that.methods.js_shuxie($(this), that.character_id, that.character);
+                });
+                //结构
+                $('.web_videos_jiegou').click(function () {
+                    that.methods.js_jiegou($(this), that.character_id, that.character);
+                });
+
+                //隐藏
+                $('.hide_webs_hide_show').click(function () {
+                    //js_webs_left
+                    that.methods.js_hide_webs_hide($(this));
+                })
+                //退出
+                $('.webs_exit').click(function () {
+                    that.methods.webs_exit();
+                })
+                //关闭二维码退出
+                $('.webs_close').click(function () {
+                    that.methods.webs_close();
+                })
+                $('.webs_character')[0].click();
+
+            },
+            updated: function () {
+
+
+            },
+            methods: {
+                /**
+                 * 点字
+                 * */
+                js_character: function (event, index, swst, cid, th,type) {
+                    var that = this;
+                    console.log(type)
+                    if(type == 0){
+                      $('.web_videos_shuxie').hide();
+                      $('.web_videos_jiegou').html("播放视频")
+                    }else {
+                      $('.web_videos_shuxie').show();
+                      $('.web_videos_jiegou').html("播放讲解")
+                    }
+                    if (app.scroll == index) {
+                        return;
+                    }
+                    app.scroll = index;
+
+                    app.character_id = swst.data[index].character_id;
+                    console.log('========');
+                    console.log(app.character_id);
+                    console.log('========');
+
+                    app.character = swst.data[index].character;
+                    // $(".js_play_video").attr("src", swst.data[index].imgUrl);
+
+
+                    $(".web_videos").removeClass(" webs_red");
+                    th.addClass('webs_red').siblings('.webs_character').removeClass('webs_red');
+
+                    $('#shuxiev').hide();
+                    myVideo.pause();
+                    //myVideo.poster(swst.data[index].imgUrl)
+
+                    that.loading_parcel_show = false;
+
+                },
+                /**
+                 * 隐藏
+                 * */
+                js_hide_webs_hide: function (event) {
+                    console.log(event);
+
+                    if ($(".js_webs_left").is(":hidden")) {
+                        $(".js_webs_left").show();
+                        event.text("隐藏");
+                        $(".js_webs_right").removeClass("web_box");
+
+
+                    } else {
+                        $(".js_webs_left").hide();
+                        event.text("显示");
+                        $(".js_webs_right").addClass("web_box");
+
+                    }
+
+
+                },
+
+                /**
+                 * 书写
+                 * */
+                js_shuxie: function (th, character_id, character) {
+                    var that = this;
+                    // if (th.hasClass("webs_red")) {
+                    //     return;
+                    // }
+                    $('.loading_parcel').addClass('web_show');
+
+                    var href = window.location.href;
+                    console.log(href)
+                    // var curriculumId = href.substr(href.indexOf("=") + 1);
+
+                        // var teacher_id = href.substr(href.indexOf("=") + 1);
+                        var teacher_id = sessionStorage.teacher_id;
+                        var js_webs_systemText1 = sessionStorage.getItem("js_webs_systemText");
+                        js_webs_systemText = JSON.parse(js_webs_systemText1);
+                        that.pjcid = js_webs_systemText.pjcid;
+                        that.pid = js_webs_systemText.pid;
+                        that.userId = teacher_id;
+                        console.log(js_webs_systemText);
+
+                    var charactertxt = character + "-文字书写";
+                    // charactertxt = hex_md5(charactertxt).substr(8, 16);
+                    let base64 = new Base64()
+                    charactertxt = base64.encode(charactertxt)
+                    console.info(charactertxt)
+                    console.log(app.typeId)
+                    var play = 'https://cloud.ziqiangzili.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt + character_id + '&teacher_id='+that.userId;
+                    // 埋点
+                    that.buryingPoint(charactertxt,that.userId)
+                    //myVideo.pause();
+                    $.ajax({
+                        type: "GET",
+                        // data:{
+                        //         teacher_id:that.userId
+                        //     },
+                        url: play,
+                        dataType: "json",
+                        success: function (res) {
+                            $(".web_videos").removeClass(" webs_red");
+                            $('#shuxiev').show();
+                            th.addClass("webs_red");
+                            console.log(res)
+                            if (res.state == 1) {
+
+                                myVideo.src(res.url);//"https://www.ziqiangzili.com/e6879169a1cb7d0c.m3u8"
+                                myVideo.play()
+                                $(".vjs-control-bar").removeClass("hide");
+                                $("#shuxiev").removeClass("notclick")
+
+                                //myVideo.play() // 视频播放
+                                myVideo.on('ended', function () {
+                                   console.log('结束播放');
+                                   $(".vjs-control-bar").addClass("hide");
+                                   $("#shuxiev").addClass("notclick")
+                               });
+                            }
+                        }
+                    })
+
+
+                },
+                /**
+                 * 结构
+                 * */
+                js_jiegou: function (th, character_id, character) {
+                    console.info(th,character_id,character)
+                    var that = this;
+                    // if (th.hasClass("webs_red")) {
+                    //     return;
+                    // }
+                    $('.loading_parcel').addClass('web_show');
+
+                    if (character_id) {
+
+                        $(".web_videos").removeClass(" webs_red");
+                        th.addClass("webs_red");
+
+                        var href = window.location.href;
+                        // var curriculumId = href.substr(href.indexOf("=") + 1);
+                        // var teacher_id = href.substr(href.indexOf("=") + 1);
+                        var teacher_id = sessionStorage.teacher_id;
+                        var js_webs_systemText1 = sessionStorage.getItem("js_webs_systemText");
+                        js_webs_systemText = JSON.parse(js_webs_systemText1);
+                        that.pjcid = js_webs_systemText.pjcid;
+                        that.pid = js_webs_systemText.pid;
+                        that.userId = teacher_id;
+                        console.log(js_webs_systemText);
+
+                        var charactertxt = character + "-文字结构";
+                        // charactertxt = hex_md5(charactertxt).substr(8, 16);
+                        let base64 = new Base64()
+                        charactertxt = base64.encode(charactertxt)
+                        var play = 'https://cloud.ziqiangzili.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt + character_id + '&teacher_id='+that.userId;
+                        // 埋点
+                        that.buryingPoint(charactertxt,that.userId)
+                        $.ajax({
+                            type: "GET",
+                            // data:{
+                            //     teacher_id:that.userId
+                            // },
+                            url: play,
+                            dataType: "json",
+                            success: function (res) {
+                                console.log(res.url)
+                                $(".web_videos").removeClass(" webs_red");
+                                $('#shuxiev').show();
+                                th.addClass("webs_red");
+                                if(res.state == 1) {
+                                    myVideo.src(res.url);
+                                    myVideo.play() // 视频播放
+                                    $(".vjs-control-bar").removeClass("hide");
+                                    $("#shuxiev").removeClass("notclick")
+
+                                    myVideo.on('ended', function () {
+                                       console.log('结束播放');
+                                        $(".vjs-control-bar").addClass("hide");
+                                        $("#shuxiev").addClass("notclick")
+                                     });
+                                }
+
+                            }
+                        })
+
+                    } else {
+                        alert("请先选择字")
+                    }
+
+                },
+                // 埋点方法
+                buryingPoint:function(charactertxt,teacher_id) {
+                    var href = window.location.href;
+                    var curriculumId = href.substr(href.indexOf("=") + 1);
+                    console.log(curriculumId.length)
+                    if(curriculumId.length > 10) {
+                        var role = 0
+                    }else {
+                        var role = 1
+                        var curriculum_id = curriculumId
+                    }
+                    console.log(charactertxt,teacher_id)
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
+                        data: {replace: charactertxt,teacher_id:teacher_id,role:role,type:0,curriculum_id:curriculum_id},
+                        dataType: 'json',
+                        success: function (res) {
+                            console.log(res)
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                /**
+                 * 退出
+                 */
+                webs_exit: function () {
+                    window.history.back();
+
+                },
+                /**
+                 * 显示用户信息
+                 */
+                webs_authority: function () {
+                    this.personal = !this.personal;
+                }
+            }
+        };
+
+        app.mounted();
+    });
+</script>
+
+</html>

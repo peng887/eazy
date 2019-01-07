@@ -1,0 +1,289 @@
+.web_box{
+    overflow: hidden;
+    background: url("../classroom_img/bg_class_begin.jpg") repeat 0 0;
+}
+.webs_right
+{
+    margin: 0 auto;
+    float: right;
+    height: 100%;
+    width: 100%;
+    position:relative;
+    z-index: 1;
+}
+.webs_right .boximg
+{
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+.webs_right .boximg img{
+    width: 100%;
+}
+::-webkit-scrollbar {
+display: none;
+}
+::-moz-scrollbar {
+display: none;
+}
+.video
+{
+    width: 100%;
+    height: 100%;
+}
+.video-js{
+    width: 0px;
+    height: 0px;
+    position: relative;
+    top:0;
+    left:0;
+    z-index: 1;
+}
+.webs_left
+{
+    position: relative;
+    overflow: hidden;
+    min-width: 175px;
+    padding: 20px 0;
+    text-align: center;
+    height: 100%;
+    overflow-y: scroll;
+    z-index: 2;
+    /*overflow: hidden;*/
+}
+.webs_left>div
+{
+
+}
+.hide_webs_hide
+{
+  text-align: center;
+width: 16px;
+/* padding: 50px; */
+width: 40px;
+margin: auto 0;
+}
+.hide_webs_hide span{
+    cursor:pointer;
+    display: inline-block;
+    width: 40px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 10px;
+}
+.webs_left p
+{
+    margin-left:40px;
+}
+.webs_left p:first-child
+{
+  width: 104px;
+  margin: 0 0 20px 40px;
+}
+.webs_character
+{
+    font-size: 20px;
+    cursor:pointer;
+    width: 104px;
+    height: 104px;
+    line-height: 104px;
+    background: white;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    /*border: 2px solid black;*/
+}
+.webs_img
+{
+    height: 24px;
+    width: 100px;
+}
+.words-box{
+    height: 50vh;
+    overflow: hidden;
+    overflow-y: auto;
+    width: 145px;
+    margin: 20px 0 20px 40px;
+}
+.webs_imm
+{
+    margin-bottom: 40px;
+}
+.webs_character:nth-child(6)
+{
+    margin-bottom: 30px;
+}
+.webs_button
+{
+    cursor:pointer;
+    width: 142px;
+    height: 42px;
+    line-height: 42px;
+    background:  white;
+    margin-left: 20px;
+    margin-top: 10px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 5px;
+}
+.webs_red
+{
+    background: #fe7e7e;
+    color: white;
+}
+
+.web_text_this
+{
+    border:1px solid #f55d5d;
+    background: #fe7e7e;
+    color:white;
+}
+.webs_topest
+{
+    width: 100%;
+    height: 100%;
+    background: rgba(51,51,51,.3);
+    position: absolute;
+    top: 0;
+    display: none;
+    z-index: 99;
+}
+.webs_reveal
+{
+  width: 464px;
+height: 352px;
+overflow: hidden;
+background: white;
+margin: 0 auto;
+position: absolute;
+border-radius: 10px;
+left: 50%;
+font-size: 24px;
+top: 50%;
+transform: translate(-50%,-50%);
+padding: 74px 62px 0 62px;
+}
+.webs_switch
+{
+    margin-top: 36px;
+}
+.webs_close
+{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    cursor: pointer;
+}
+.webs_code
+{
+    margin: 0 auto;
+    width: 464px;
+    height: 352px;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    text-align: center;
+}
+.webs_codes
+{
+    padding-top: 57px;
+    text-align: center;
+}
+.webs_code p
+{
+    margin-top: 34px;
+}
+
+.loading_parcel
+{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color:rgba(0,0,0,0.5);
+    z-index: 99;
+}
+.loading_parcel > div
+{
+    width: 100%;
+    height: 100%;
+}
+.loading_parcel > div > div {
+    width: 2.7rem;
+    height: 2.7rem;
+    margin: 0 auto; }
+@-webkit-keyframes ball-spin-fade-loader {
+    50% {
+        opacity: 0.3;
+        -webkit-transform: scale(0.4);
+        transform: scale(0.4); }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
+@keyframes ball-spin-fade-loader {
+    50% {
+        opacity: 0.3;
+        -webkit-transform: scale(0.4);
+        transform: scale(0.4); }
+    100% {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
+.loading_parcel > div > div .loader .ball-spin-fade-loader {
+    position: relative;
+    left: 0.9rem; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(1) {
+    top: 25px;
+    left: 0;
+    -webkit-animation: ball-spin-fade-loader 1s 0s infinite linear;
+    animation: ball-spin-fade-loader 1s 0s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(2) {
+    top: 17.04545px;
+    left: 17.04545px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.12s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.12s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(3) {
+    top: 0;
+    left: 25px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.24s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.24s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(4) {
+    top: -17.04545px;
+    left: 17.04545px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.36s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.36s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(5) {
+    top: -25px;
+    left: 0;
+    -webkit-animation: ball-spin-fade-loader 1s 0.48s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.48s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(6) {
+    top: -17.04545px;
+    left: -17.04545px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.6s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.6s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(7) {
+    top: 0;
+    left: -25px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.72s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.72s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div:nth-child(8) {
+    top: 17.04545px;
+    left: -17.04545px;
+    -webkit-animation: ball-spin-fade-loader 1s 0.84s infinite linear;
+    animation: ball-spin-fade-loader 1s 0.84s infinite linear; }
+.loading_parcel > div > div .loader .ball-spin-fade-loader > div {
+    background-color: #FFF;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 100%;
+    margin: 0.1rem;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    position: absolute; }

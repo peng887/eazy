@@ -1,0 +1,22 @@
+{
+  "name": "Easy",
+  "version": "1.0.1",
+  "main": "main.js",
+  "author": "Mr C",
+  "scripts": {
+    "start": "electron .",
+    "package": "electron-packager . eazyword --win32 --out ./package --arch=ia32 --app-version=0.0.1 --electron-version=3.0.13 --icon=static/images/app.ico"
+  },
+  "devDependencies": {
+    "electron": "^3.0.10",
+    "electron-packager": "^12.2.0"
+  },
+  "dependencies": {
+    "electron-builder": "^20.38.4",
+    "electron-winstaller": "^2.7.0",
+    "node": "^11.4.0",
+    "npm": "^6.5.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
+  }
+}

@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>书写中国 | 易练字</title>
+    <link href="/classroom_img/favicon.ico" rel="shortcut icon"/>
+    <link rel="stylesheet" href="../bower_components/weui/dist/style/weui.css"/>
+    <link rel="stylesheet" href="../bower_components/weui/dist/example/example.css"/>
+    <link rel="stylesheet" href="../classroom_css/public.css">
+    <link rel="stylesheet" href="../classroom_css/curriculums_table.css">
+    <script src="../classroom_js/route.js"></script>
+    <script src="../bower_components/weui/dist/example/zepto.min.js"></script>
+    <script src="../bower_components/weui.js/dist/weui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+
+        const { ipcRenderer } = require('electron')
+        const updateOnlineStatus = () => {
+          ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
+        }
+        window.addEventListener('online',  updateOnlineStatus)
+        window.addEventListener('offline',  updateOnlineStatus)
+        updateOnlineStatus()
+    </script>
+
+
+    <style>
+        .web_text_this {
+            color: #f55d5d;
+            border: 2px solid #f55d5d;
+        }
+        .lineHeight44{
+          line-height: 44px;
+        }
+        .weui-select{
+          line-height: 1!important;
+        }
+        /* 客服系统二维码 */
+        .webs_service
+        {
+            position: fixed;
+            top: 280px;
+            right: 0;
+            cursor: pointer;
+        }
+        .img-service , .plan{
+            width: 90px;
+            height: 90px;
+        }
+        .el-dialog {
+            position: relative;
+        }
+        .el-dialog__header {
+            height: 0;
+        }
+        .content {
+            height: 250px;
+        }
+        .img-erweima {
+            width: 250px;
+            height: 250px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+        }
+        .content1 {
+            height: 184px;
+        }
+        .img-shuru {
+            width: 310px;
+            height: 160px;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+        }
+        .kefu {
+            margin-top: -32px;
+            text-align: center;
+            font-size:26px;
+            font-family:MicrosoftYaHei;
+            font-weight:800;
+            color:rgba(51,51,51,1);
+        }
+        .first-line {
+            text-align: center;
+            font-size:26px;
+            font-family: 微软雅黑;
+            font-weight: normal;
+            color:rgba(51,51,51,1);
+            margin-bottom: 20px;
+        }
+        .second-line {
+            font-size:26px;
+            font-family: 微软雅黑;
+            font-weight: normal;
+            color:rgba(51,51,51,1);
+            text-align: center;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-bottom: 10px;
+        }
+        .el-dialog__footer {
+            position: absolute;
+        }
+        [v-cloak] {
+            display: none;
+        }
+
+        /* 新样式 */
+        .newWeb {
+            padding: 0;
+        }
+        .newWeb li {
+          list-style: none;
+margin-bottom: 12px;
+border-radius: 6px;
+padding-left: 20px;
+background: #fafafa;
+margin-right: 20px;
+        }
+        .table-title {
+          width: 98%;
+  /* height: 60px; */
+  display: flex;
+  padding: 15px 0;
+  line-height: 1;
+  align-items: center;
+  cursor: pointer;
+        }
+        .table-list {
+          width: 98%;
+/* padding-top: 5px; */
+padding-bottom: 15px;
+display: flex;
+align-items: center;
+overflow: hidden;
+        }
+.table-list .newWebItem{
+width: 108px;
+height: 56px;
+border: 1px solid #bbb;
+text-align: center;
+line-height: 56px;
+margin-right: 20px;
+border-radius: 3px;
+cursor: pointer;
+color: #333;
+}
+.version{
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  font-size: 12px;
+  padding:2px 5px;
+  color: #888;
+  width: 100px;
+  height: 43px;
+}
+.red{
+  background: #f55d5d;
+  color: #fff;
+  border:none;
+}
+    </style>
+</head>
+<body>
+<div class="web_box weui-flex flex_column" id="app" v-cloak>
+    <div class="webs_header ">
+        <div class="web_header_con weui-flex flex-ali_i_center flex_jus_between">
+            <div class=" weui-flex flex-ali_i_center flexAli">
+                <div class="webs_yike"><img src="../classroom_img/LOGO.png" alt=""/></div>
+                <div class="webs_class"><img src="../classroom_img/LOGOwenzi.png" alt=""/></div>
+            </div>
+
+            <div class="webs_behind weui-flex flex-ali_i_center">
+                <!--<img src="../img/geren.png" alt=""/>-->
+                <!--<p class="webs_authority" @click="webs_authority">欢迎老师!</p>-->
+                <button class="webs_exit red" @click="webs_location">排课计划</button>
+                <button class="webs_exit red" @click="webs_service">客服咨询</button>
+                <button style="margin-left:40px;" class="webs_exit" @click="webs_exit"> 退出</button>
+                <div class="webs_personal web_hide" :class="{'web_show':!personal}">
+                    <img src="../classroom_img/touxiang.png" alt=""/>
+                    <div class="webs_align">
+                        <!--<p>姓名:</p>-->
+                        <!--<p>学校: </p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="webs_section weui-flex flex_column weui-flex__item">
+        <div class="webs_center weui-flex flex_column ">
+            <div class="webs_plan">
+                <div>
+                    <ul class="lineHeight44 webs_long weui-flex flex_jus_between">
+                        <li>
+                            <div class="webs_list">课程列表</div>
+                        </li>
+                        <li class="lineHeight44 weui-flex webs_first" style="margin-left:74px">
+                            <div>教材版本:</div>
+                            <div class="web_table_con webs_logger">
+                                <div class="weui-cell__bd">
+                                    <select id="selectOne" class="weui-select" v-model="pid" @change="selectjc($event)" style="width:100%">
+                                        <option v-for="(item,index) in plist" :value="item.material_id">{{item.edition}}</option>
+                                    </select>
+                                    <img src="../classroom_img/3j.png" alt=""/>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="weui-flex webs_second">
+                            <div>教材信息:</div>
+                            <div class="web_table_con  webs_logger">
+                                <div class="weui-cell__bd">
+                                    <select id="selectTwo" class="weui-select" id="selectedclass" name="" v-model="selece"
+                                            @change="seleces($event)">
+                                        <option v-for="(item,index) in classData" :value="item.material_id"
+                                                :id="item.material_id">{{item.edition}}
+                                        </option>
+                                    </select>
+                                    <img src="../classroom_img/3j.png" alt=""/>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="no_web_cont_box weui-flex__item web_hide" :class="{web_show:isdata == 0}">
+                <img src="../classroom_img/nolist.png" />
+                <p>您暂时没有激活的课程，请到易练字小程序我的课程进行激活～</p>
+            </div>
+            <div class="web_cont_box weui-flex__item web_hide newWeb_box" :class="{web_show:isdata == 1}">
+
+                <!-- <div class="webs_system" v-for="(im,index) in couresData" v-if="index!=0">
+                    <label class="webs_mes" @click="webs_mes(index)">{{im.edition}}</label>
+                    <span class="webs_change js_webs_change" @click="webs_change(index)" v-if="im.data!=''"><img
+                            src="../classroom_img/xia.png" alt=""/></span>
+
+                    <div class="webs_cover" v-if="im.data!=''" :class="js_chang==index?'web_show':''">
+                        <label class="webs_text" v-for="ite in im.data">{{ite.character}}</label>
+                        <span class="webs_changes" @click="webs_changes"><img src="../classroom_img/shang.png" alt=""/></span>
+                    </div>
+
+
+                    <div class="table-title">{{im.edition}}</div>
+                    <div v-show="item.fontList.length>0" class="table-list" >
+                        <span v-for="ite in im.data">{{ite.character}}</span>
+                    </div>
+                </div> -->
+
+                <!-- 新样式-->
+                <ul class="newWeb">
+                    <li v-for="(im,index) in couresData" v-if="index!=0" @click="webs_mes(index)">
+                        <div class="table-title">{{im.edition}}</div>
+                        <div v-if="im.data!=''" class="table-list" >
+                            <span v-for="ite in im.data" class="newWebItem">{{ite.character}}</span>
+                        </div>
+                    </li>
+                </ul>
+
+
+            </div>
+            <!-- <div class="webs_location" @click="webs_location"><button>排课计划</button></div>
+            <div class="webs_service" @click="webs_service"><button>客服咨询</button></div> -->
+            <div class="" v-show="dialogVisible">
+
+
+            <el-dialog
+                :visible.sync="dialogVisible"
+                width="32%"
+                :before-close="handleClose">
+                <div class="kefu">客服使用说明</div>
+                <div class="content">
+                        <img class="img-erweima" src="../classroom_img/erweima.png" alt="">
+                </div>
+                <div class="first-line">1.扫描二维码关注字强字立公众号</div>
+                <div class="content1">
+                    <img class="img-shuru" src="../classroom_img/shuruwenzi.png" alt="">
+                </div>
+                <div class="second-line">2.在公众号内输入您的问题人工客服为您解答</div>
+                <span slot="footer" class="dialog-footer">
+
+                </span>
+            </el-dialog>
+            </div>
+        </div>
+    </div>
+
+    <div class="webs_topest " :class="{'web_show':currentCurriculum}">
+        <div class="webs_reveal">
+            <p style="font-size: 22px;padding-bottom: 30px;padding-top: 10px;">您是否准备讲课，直接讲课请点击 "开始讲课"。智控课堂请点击“智控课堂”按钮，获取二维码</p>
+            <div class="webs_switch">
+                <span class="webs_start start_left" @click="js_webs_start">开始讲课</span>
+                <span class="webs_start start_right" @click="js_webs_intelligence">智控课堂</span>
+                <!-- webs_intelligence -->
+                <span class="webs_close" @click="webs_close"> <img src="../classroom_img/X.png" alt=""/></span>
+                <div class="webs_code">
+                    <div class="webs_codes"><img src="../classroom_img/B2wm.png" alt=""/></div>
+                    <p>扫码进入智控课堂</p>
+                    <span class="webs_close web_hide"> <img src="../classroom_img/X.png" alt=""/></span>
+                </div>
+
+
+                <div class="webs_begin" :class="{'web_show':currentCurriculumbegin}">
+                    <div class="webs_begins webs_just"><img src="../classroom_img/tanchuang.png" alt=""/></div>
+                    <p class="pcenter">已检测到您所排的课程:</p>
+                    <p>课程标题: {{processData.edition}}</p>
+                    <p>课程时间: {{processData.lectureDate}}</p>
+                    <p>授课班级: {{processData.lectureClasses}}</p>
+                    <div class="btnWrap">
+                      <span class="webs_start webs_starts marginRight30" @click="js_webs_start">开始讲课</span>
+                      <!-- webs_intelligence webs_ar -->
+                      <span class="webs_start webs_starts" @click="js_webs_intelligence">智控课堂</span>
+                    </div>
+
+                    <div class="webs_close" @click="webs_close"> <img src="../classroom_img/X.png" alt=""/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="version">书写中国-v1.5.0</span>
+
+</body>
+<script>
+    $(function () {
+        var js_webs_systemText;
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isdata:2,//是否激活
+                pid: 0,//教材id
+                pname: '',//教材名称
+                plist: [],//教材列表
+                pindex: 0,//教材索引值
+                personal: true,
+                js_chang: null,
+                selece: null,//当前课程
+                classData: "",//教材信息
+                couresData: "",//生字列表
+                currentCurriculum: false,
+                currentCurriculumbegin: false,
+                processData: {
+                    "curriculumContent": "干十丰车",
+                    "data": [
+                        {
+                            "character_id": 9,
+                            "character": "干",
+                            "material_id": null,
+                            "characterState": null,
+                            "imgUrl": null
+                        },
+                        {
+                            "character_id": 11,
+                            "character": "十",
+                            "material_id": null,
+                            "characterState": null,
+                            "imgUrl": null
+                        },
+                        {
+                            "character_id": 10,
+                            "character": "丰",
+                            "material_id": null,
+                            "characterState": null,
+                            "imgUrl": null
+                        },
+                        {
+                            "character_id": 12,
+                            "character": "车",
+                            "material_id": null,
+                            "characterState": null,
+                            "imgUrl": null
+                        }
+                    ],
+                    "edition": "哦婆婆",
+                    "lectureClasses": "一年级九班",
+                    "lectureDate": "2018/08/02 15:15",
+                    "state": 1
+                },
+                dialogVisible:false,
+                teachMaterial:45,
+                role:1
+            },
+            mounted: function () {
+                var that = this;
+                // that.buryingPoint()
+                var href = window.location.href;
+                // var teacher_id = href.split("=")[1]
+                if(!sessionStorage.teacher_id){
+                    window.location.href="index.html"
+                }else{
+                    var teacher_id = sessionStorage.getItem("teacher_id")
+                }
+
+                that.teacher_id = teacher_id;
+                // var teacher_id = canshu.split("-");
+
+                _sTestingProcess();
+                $.ajax({
+                    type: 'POST',
+                    url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getEdition.do",
+                    data: {teacher_id: that.teacher_id},
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.state === 1) {
+                            if (res.data != null) {
+                                that.plist = res.data;
+                                that.pid = that.plist[0].material_id;
+                                that.isdata = 1;
+
+                                //获取课程列表
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getMate.do",
+                                    data: {teacher_id: that.teacher_id, pid: that.pid},
+                                    dataType: 'json',
+                                    success: function (res) {
+                                        if (res.state === 1) {
+                                            if (res.data != null) {
+                                                that.classData = res.data;
+                                                that.selece = that.classData[0].material_id;
+
+                                                _selectFirst(that.selece);
+                                            }
+                                        }else if(res.state == 0){
+
+                                        }
+                                    }
+                                })
+                                //获取课程结束
+
+                            }
+
+                        }else if(res.state == 0){
+                            that.plist = [{"material_id":0,"edition":"没有教材版本"}];
+                            that.classData = [{"material_id":0,"edition":"没有教材信息"}];
+                            that.selece = 0;
+                            that.isdata = 0;
+                        }
+                    },
+                    error: function (res) {
+                    }
+                });
+
+                /**
+                 * 显示部编版的课程
+                 *
+                 */
+                function _selectFirst(newQuestion) {
+                    $.ajax({
+                        type: 'GET',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        data: {pid: newQuestion},
+                        dataType: 'json',
+                        success: function (ress) {
+                            console.log(ress)
+                            if (ress.state === 1) {
+                                if (ress.data != null) {
+                                    that.couresData = ress.data;
+                                    // console.log(this.couresData)
+
+                                    that.selece = that.classData[0].material_id;
+                                    // //console.log('====='+that.classData[0].edition)
+                                }
+
+
+                            } else if (ress.state === 0) {
+                                alert("请求失败")
+                            }
+                            // else if (ress.state === 2) {
+                            //     alert("登陆过期，请重新登录");
+                            //     window.location.href = 'home_page.html';
+                            // }
+                        },
+                        error: function (ress) {
+                        }
+                    });
+
+                };
+
+                /**
+                 * 检测排课信息
+                 *
+                 *
+                 */
+                function _sTestingProcess() {
+                    $.ajax({
+                        type: 'GET',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/ejectCurriculum.do",
+                        dataType: 'json',
+                        data: {teacher_id: teacher_id},
+                        success: function (res) {
+                            if (res.state === 1) {
+                                if (res != null) {
+                                    that.currentCurriculum = true;
+                                    that.currentCurriculumbegin = true;
+                                    that.processData = res;
+                                    js_webs_systemText = res;
+                                }
+
+
+                            } else if (res.state === 0) {
+
+                            }
+                            // else if (res.state === 2) {
+                            //     alert("登陆过期，请重新登录");
+                            //     window.location.href = 'home_page.html';
+                            // }
+                        },
+                        error: function (res) {
+                            console.log("error::" + res)
+                        }
+                    });
+                }
+            },
+            methods: {
+                /**
+                 * 显示部编版的课程
+                 *
+                 */
+                _selectFirst: function (newQuestion) {
+                    var that = this;
+                    $.ajax({
+                        type: 'GET',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        data: {pid: newQuestion},
+                        dataType: 'json',
+                        success: function (ress) {
+                            if (ress.state === 1) {
+                                if (ress.data != null) {
+                                    that.couresData = ress.data;
+
+                                    that.selece = that.classData[0].material_id;
+                                    // //console.log('====='+that.classData[0].edition)
+                                }
+
+
+                            } else if (ress.state === 0) {
+                                alert("请求失败")
+                            }
+                            // else if (ress.state === 2) {
+                            //     alert("登陆过期，请重新登录");
+                            //     window.location.href = 'home_page.html';
+                            // }
+                        },
+                        error: function (ress) {
+                        }
+                    });
+
+                },
+                /**
+                 * 选择教材
+                 * */
+                selectjc: function (e) {
+                    var that = this;
+                    var href = window.location.href;
+                    if(!sessionStorage.teacher_id){
+                        window.location.href="index.html"
+                    }else{
+                        var teacher_id = sessionStorage.getItem("teacher_id")
+                    }
+
+                    that.teacher_id = teacher_id;
+                    that.pindex = e.srcElement.selectedIndex;
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getMate.do",
+                        data: {pid: that.pid,teacher_id: that.teacher_id},
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.state === 1) {
+                                if (res.data != null) {
+                                    that.classData = res.data;
+                                    that._selectFirst(res.data[0].material_id);
+                                    that.selece = that.couresData[0].material_id
+                                }
+
+                            }
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                //选择年级
+                seleces: function (event) {
+                    var newQuestion = event.srcElement.value;
+                    var that = this;
+                    if(newQuestion) {
+                        that.teachMaterial = newQuestion;
+                    }
+                    var data = {pid: newQuestion};
+                    $.ajax({
+                        type: 'GET',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        data: {pid: newQuestion},
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.state === 1) {
+                                that.couresData = res.data;
+                            } else if (res.state === 0) {
+                                console.log("请求失败")
+                            }
+                            // else if (res.state === 2) {
+                            //     alert("登陆过期，请重新登录");
+                            //     window.location.href = 'home_page.html';
+                            // }
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                /**
+                 * 点字选中
+                 * */
+                webs_text: function (event) {
+                    console.log(event);
+                    $(".webs_text").removeClass(" web_text_this");
+                    event.target.classList.add("web_text_this")
+                },
+
+                /**
+                 * 退出
+                 */
+                webs_exit: function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/signOut.do",
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.state == 1) {
+                                location.href = 'index.html';
+                            }
+
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                /**
+                 * 点击标题显示是否上课弹窗
+                 */
+                webs_mes: function (index) {
+                    var that = this;
+                    that.currentCurriculum = true;
+                    js_webs_systemText = that.couresData[index];
+                },
+                /**
+                 * 点击标题右侧的向下，弹出该课程的字
+                 */
+                webs_change: function (index) {
+                    var that = this;
+                    if (that.js_chang == index) {
+                        that.js_chang = false
+                    } else {
+                        that.js_chang = index
+                    }
+                },
+                /**
+                 * 开始讲课，检索当前课程信息
+                 */
+                js_webs_start: function () {
+                    var that = this;
+                    var type = 0
+                    js_webs_systemText['pjcid'] = that.pid;
+                    sessionStorage.setItem("js_webs_systemText", JSON.stringify(js_webs_systemText))
+                    window.location.href = "begin_class.html";
+                    that.buryingPoint(type)
+                },
+                /**
+                 *  进入智控课堂，生成通讯链接二维码
+                 */
+                js_webs_intelligence: function () {
+                    var that = this;
+                    var type = 1
+                    that.buryingPoint(type)
+                    js_webs_systemText['pjcid'] = that.pid;
+                    sessionStorage.setItem("js_webs_systemText", JSON.stringify(js_webs_systemText));
+                    window.location.href = "js_video_begin_class.html?teacher_id=" + that.teacher_id;
+                },
+                // 埋点方法
+                buryingPoint:function(type) {
+                    console.log(this.teachMaterial,this.role,this.pid,this.teacher_id)
+                    $.ajax({
+                        type: 'POST',
+                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
+                        data: {pid: this.pid,role:this.role,mid:this.teachMaterial,teacher_id:this.teacher_id,type:type},
+                        dataType: 'json',
+                        success: function (res) {
+                            console.log(res)
+                        },
+                        error: function (res) {
+                        }
+                    });
+                },
+                /**
+                 * 点击关闭，关闭弹窗
+                 */
+                webs_close: function () {
+                    var that = this;
+                    that.currentCurriculum = false;
+                    that.currentCurriculumbegin = false;
+                },
+                /**
+                 *  跳转到排课计划
+                 */
+                webs_location: function () {
+                    var that = this;
+                    window.location.href = 'curriculum_arrangement_plan_large.html';
+                },
+                // 跳转到客服二维码
+                webs_service:function () {
+                    this.dialogVisible = true
+                },
+                handleClose:function(done) {
+                    this.dialogVisible = false
+                },
+                /**
+                 * 显示用户信息
+                 */
+                webs_authority: function () {
+                    this.personal = !this.personal;
+                },
+                /**
+                 * 课程字后面的收回按钮
+                 */
+                // webs_changes: function () {
+                //     this.js_chang = false
+                // }
+            }
+        });
+
+        // $('#selectedclass option').eq(0).attr('selected','selected');
+
+
+    });
+</script>
+</html>

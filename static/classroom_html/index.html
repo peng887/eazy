@@ -18,14 +18,12 @@
     <script type="text/javascript" src="../classroom_js/utf.js"></script>
     <script type="text/javascript" src="../classroom_js/jquery.qrcode.js"></script>
     <script>
-
         var _hmt = _hmt || [];
         (function() {
           var hm = document.createElement("script");
           hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
           var s = document.getElementsByTagName("script")[0];
           s.parentNode.insertBefore(hm, s);
-
 
           const { ipcRenderer } = require('electron')
           const updateOnlineStatus = () => {
@@ -57,7 +55,9 @@
     </style>
 </head>
 <body>
-<div class="web_box weui-flex ">
+
+<div class="web_box weui-flex" id="app">
+
     <div class="left_shuimo">
         <div class="left_shuimo_image">
             <div class="left_shuimo_img">
@@ -109,13 +109,10 @@
 <span class="version">书写中国-v1.5.0</span>
 </body>
 <script>
-    $(function()
-    {
-
+    $(function(){
         var input;
         var timer;
         $('#loginButton').click(function(){
-
             var str = $("#iPhoneNumber").val();
             if (str == null || str == "") {
                 alert("请输入手机号！");
@@ -140,10 +137,7 @@
                     }
                 })
             }
-
-        });
-
-
+        })
 
         $('#iPhoneNumber').keyup(function(event){
             if(event.keyCode ==13){
@@ -171,7 +165,6 @@
                     })
                 }
             }
-
         })
 
         /**

@@ -39,23 +39,7 @@ ipcMain.on('asynchronous-message', (event, arg) => {
   }
 })
 
-let isOnline = true
-let isOutline = false
-ipcMain.on('online-status-changed', (event, status) => {
-  if (status && isOnline) {
-    isOnline = false
-    isOutline = false
-    setTimeout(() => {
-      onlineStatusWindow.loadFile(path.join(__dirname,'/static/classroom_html/index.html'))
-    },2000)
-  } else if (!status && !isOutline) {
-    setTimeout(() => {
-      onlineStatusWindow.loadFile(path.join(__dirname,'/static/classroom_html/netError.html'))
-      isOnline = true
-      isOutline = true
-    },2000)
-  }
-})
+network()
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -68,3 +52,23 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+function network () {
+  let isOnline = true
+  let isOutline = false
+  ipcMain.on('online-status-changed', (event, status) => {
+    if (status && isOnline) {
+      isOnline = false
+      isOutline = false
+      setTimeout(() => {
+        onlineStatusWindow.loadFile(path.join(__dirname,'/static/classroom_html/index.html'))
+      },2000)
+    } else if (!status && !isOutline) {
+      setTimeout(() => {
+        onlineStatusWindow.loadFile(path.join(__dirname,'/static/classroom_html/netError.html'))
+        isOnline = true
+        isOutline = true
+      },2000)
+    }
+  })
+}

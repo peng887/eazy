@@ -1,3 +1,6 @@
+/*
+  这项目太乱了，还要做热更新，好吧，我写...热更新代码如下，html部分拜托后面的人重构吧
+*/
 const { electron, app, BrowserWindow,ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')

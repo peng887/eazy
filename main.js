@@ -1,5 +1,5 @@
 /*
-  这项目太乱了，还要做热更新，好吧，我写...热更新代码如下，html部分拜托后面的人重构吧
+  * 这项目太乱了，还要做热更新，好吧，我写...热更新代码如下，html部分拜托后面的人重构吧
 */
 const { electron, app, BrowserWindow,ipcMain } = require('electron')
 const path = require('path')
@@ -27,7 +27,6 @@ app.on('ready',createWindow)
 //检查更新
 ipcMain.on('asynchronous-message', (event, arg) => {
   if (arg) {
-    console.info("检查更新中...")
     https.get(versionUrl,(res) => {
       if (res.statusCode == 200) {
         res.on("data",(data) => {
@@ -41,7 +40,7 @@ ipcMain.on('asynchronous-message', (event, arg) => {
             }
           })
         }).on('error', (e) => {
-          console.error(e)
+          console.error(`请求遇到问题: ${e.message}`)
         })
       } else {
         console.info(res.statusCode)
@@ -83,3 +82,7 @@ function network () {
     }
   })
 }
+/*
+  * 热更新end
+  * Author:peng
+*/

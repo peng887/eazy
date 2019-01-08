@@ -19,32 +19,6 @@
     <script type="text/javascript" src="../classroom_js/jquery.qrcode.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-
-          const { ipcRenderer } = require('electron')
-          const updateOnlineStatus = () => {
-            ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
-          }
-          window.addEventListener('online',  updateOnlineStatus)
-          window.addEventListener('offline',  updateOnlineStatus)
-          updateOnlineStatus()
-
-          ipcRenderer.on('asynchronous-reply', (event, arg) => {
-            if (arg) {
-              console.info("有更新！～")
-            } else {
-              console.info("没有更新")
-            }
-          }).send('asynchronous-message', true)
-
-        })()
-    </script>
     <style media="screen">
       .version{
         position: fixed;
@@ -54,12 +28,30 @@
         padding:2px 5px;
         color: #888;
       }
+      button{
+        width: auto;
+        height: auto;
+        margin-top: 0;
+      }
+      .el-button--primary{
+        background: #f55d5d;
+        border-color: #f55d5d;
+      }
+      .el-button--primary:hover{
+        background: #f55d5d;
+        border-color: #f55d5d;
+      }
+      .el-loading-spinner i{
+        color: #fff;
+      }
+      .el-loading-spinner .el-loading-text{
+        color: #fff;
+      }
     </style>
 </head>
 <body>
 
-<div class="web_box weui-flex">
-
+<div class="web_box weui-flex" id="app">
     <div class="left_shuimo">
         <div class="left_shuimo_image">
             <div class="left_shuimo_img">
@@ -107,14 +99,97 @@
     <div class="right_shuimo">
         <img src="../classroom_img/shuimo2.png" alt="">
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
 </div>
 <span class="version">书写中国-v1.5.0</span>
-
 </body>
 <script>
-    $(function(){
+//热更新
+const { ipcRenderer } = require('electron')
+const https = require('https')
+const versionUrl = 'https://raw.githubusercontent.com/peng887/eazy/master/package.json'
+
+//监听网络
+const updateOnlineStatus = () => {
+  ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
+}
+window.addEventListener('online',  updateOnlineStatus)
+window.addEventListener('offline',  updateOnlineStatus)
+updateOnlineStatus()
+
+ipcRenderer.on('asynchronous-reply', (event, arg) => {
+  if (arg) {
+    console.info("有更新！～")
+  } else {
+    console.info("没有更新")
+  }
+}).send('asynchronous-message', true)
+
+new Vue({
+  el:"#app",
+  data:{
+    dialogVisible:true
+  },
+  methods:{
+    confirm () {
+      this.dialogVisible = false
+      const loading = this.$loading({
+        lock: true,
+        text: '正在更新应用程序...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      })
+      https.get(versionUrl, (res) => {
+        loading.close()
+        if (res.statusCode == 200) {
+          res.on("data", (data) => {
+            let versionOnline = JSON.parse(data.toString()).version
+            let updateInfo = JSON.parse(data.toString()).updateInfo
+            updateInfo.map((item, i) => {
+              if (item.version == versionOnline) {
+                console.info(item.detail)
+              }
+            })
+          }).on('error', (e) => {
+            console.error(`请求遇到问题: ${e.message}`)
+          })
+        }
+      })
+    }
+  }
+})
+/*
+  * 热更新end
+  * Author:peng
+*/
+
+
+
+
+
+
+
+
+
+
+
         var input;
         var timer;
+        var _hmt = _hmt || [];
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+
         $('#loginButton').click(function(){
             var str = $("#iPhoneNumber").val();
             if (str == null || str == "") {
@@ -170,11 +245,7 @@
             }
         })
 
-        /**
-         * 三秒请求一次，直到拿到值
-         * @param url
-         * @private
-         */
+
         function _ajax(url,input)
         {
             $.ajax({
@@ -195,7 +266,5 @@
                 }
             });
         }
-
-    });
 </script>
 </html>

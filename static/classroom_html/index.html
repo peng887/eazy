@@ -38,6 +38,8 @@
           ipcRenderer.on('asynchronous-reply', (event, arg) => {
             if (arg) {
               console.info("有更新！～")
+            } else {
+              console.info("没有更新")
             }
           }).send('asynchronous-message', true)
 

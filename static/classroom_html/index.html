@@ -35,7 +35,13 @@
           window.addEventListener('offline',  updateOnlineStatus)
           updateOnlineStatus()
 
-        })();
+          ipcRenderer.on('asynchronous-reply', (event, arg) => {
+            if (arg) {
+              console.info("有更新！～")
+            }
+          }).send('asynchronous-message', true)
+
+        })()
     </script>
     <style media="screen">
       .version{

@@ -13,7 +13,7 @@ const createWindow = () => {
     height:740
   })
   onlineStatusWindow.loadFile(path.join(__dirname,'/static/classroom_html/cover.html'))
-  // onlineStatusWindow.webContents.openDevTools()
+  onlineStatusWindow.webContents.openDevTools()
   onlineStatusWindow.on('closed', () => {
     onlineStatusWindow = null
   })
@@ -21,18 +21,22 @@ const createWindow = () => {
 app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
 app.on('ready',createWindow)
 
-https.get(versionUrl,(res) => {
-  res.on("data",(data) => {
-    let versionOnline = JSON.parse(data.toString()).version
-    fs.readFile('./package.json',(err,res) => {
-      let versionOutline = JSON.parse(res.toString()).version
-      if (versionOnline != versionOutline) {
-        console.info("有更新")
-      } else {
-        console.info("没有更新，请使用")
-      }
+ipcMain.on('asynchronous-message', (event, arg) => {
+  if (arg) {
+    https.get(versionUrl,(res) => {
+      res.on("data",(data) => {
+        let versionOnline = JSON.parse(data.toString()).version
+        fs.readFile('./package.json',(err,res) => {
+          let versionOutline = JSON.parse(res.toString()).version
+          if (versionOnline != versionOutline) {
+            event.sender.send('asynchronous-reply', true)
+          } else {
+            event.sender.send('asynchronous-reply', false)
+          }
+        })
+      })
     })
-  })
+  }
 })
 
 let isOnline = true

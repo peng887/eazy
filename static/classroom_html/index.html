@@ -128,7 +128,7 @@ updateOnlineStatus()
 
 ipcRenderer.on('asynchronous-reply', (event, arg) => {
   if (arg) {
-    console.info("有更新！～")
+    this.dialogVisible = true
   } else {
     console.info("没有更新")
   }
@@ -137,7 +137,7 @@ ipcRenderer.on('asynchronous-reply', (event, arg) => {
 new Vue({
   el:"#app",
   data:{
-    dialogVisible:true
+    dialogVisible:false
   },
   methods:{
     confirm () {

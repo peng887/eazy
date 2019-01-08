@@ -1,11 +1,11 @@
 {
   "name": "Easy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "updateInfo":[
     {
-      "version":"1.0.1",
-      "files":[],
-      "detail":[]
+      "version":"1.0.2",
+      "files":["index.html"],
+      "detail":["首页优化更流畅！～"]
     }
   ],
   "main": "main.js",

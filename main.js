@@ -23,61 +23,70 @@ app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
 app.on('ready',createWindow)
 
 //检查更新
-// ipcMain.on('asynchronous-message', (event, arg) => {
-//   if (arg) {
-//     https.get(versionUrl,(res) => {
-//       if (res.statusCode == 200) {
-//         res.on("data",(data) => {
-//           let versionOnline = JSON.parse(data.toString()).version
-//           fs.readFile('./package.json',(err,res) => {
-//             let versionOutline = JSON.parse(res.toString()).version
-//             if (versionOnline != versionOutline) {
-//               event.sender.send('asynchronous-reply', true)
-//             } else {
-//               event.sender.send('asynchronous-reply', false)
-//             }
-//           })
-//         }).on('error', (e) => {
-//           console.error(`请求遇到问题: ${e.message}`)
-//         })
-//       } else {
-//         console.info(res.statusCode)
-//       }
-//     })
-//   }
-// })
+ipcMain.on('asynchronous-message', (event, arg) => {
+  if (arg) {
+    https.get(versionUrl,(res) => {
+      if (res.statusCode == 200) {
+        res.on("data",(data) => {
+          let versionOnline = JSON.parse(data.toString()).version
+          fs.readFile('./package.json',(err,res) => {
+            let versionOutline = JSON.parse(res.toString()).version
+            if (versionOnline != versionOutline) {
+              event.sender.send('asynchronous-reply', true)
+            } else {
+              event.sender.send('asynchronous-reply', false)
+            }
+          })
+        }).on('error', (e) => {
+          console.error(`请求遇到问题: ${e.message}`)
+        })
+      } else {
+        console.info(res.statusCode)
+      }
+    })
+  }
+})
 
 //确认更新
-// ipcMain.on('asynchronous-ok', (event, arg) => {
-//   if (arg) {
-//     https.get(versionUrl, (res) => {
-//       event.sender.send('asynchronous-re', true)
-//       if (res.statusCode == 200) {
-//         res.on("data", (data) => {
-//           let versionOnline = JSON.parse(data.toString()).version
-//           let updateInfo = JSON.parse(data.toString()).updateInfo
-//           updateInfo.map((item, i) => {
-//             if (item.version == versionOnline) {
-//               item.files.map((file, i) => {
-//                 https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
-//                   res.on("data", (data) => {
-//                     console.info(data.toString())
-//                     let rs = fs.createReadStream(data)
-//                     rs.close()
-//                     let ws = fs.createWriteStream('./test.html')
-//                     rs.pipe(ws)
-//                   })
-//                 })
-//               })
-//             }
-//           })
-//         }).on('error', (e) => {
-//           console.error(`请求遇到问题: ${e.message}`)
-//         })
-//       }
-//     })
-//   }
-// })
+ipcMain.on('asynchronous-ok', (event, arg) => {
+  if (arg) {
+    https.get(versionUrl, (res) => {
+      event.sender.send('asynchronous-re', true)
+      if (res.statusCode == 200) {
+        res.on("data", (data) => {
+          let versionOnline = JSON.parse(data.toString()).version
+          let updateInfo = JSON.parse(data.toString()).updateInfo
+          updateInfo.map((item, i) => {
+            if (item.version == versionOnline) {
+              item.files.map((file, i) => {
+                https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
+                  res.on("data", (data) => {
+                    let rs = fs.createReadStream(data, {
+                      highWaterMark: 1,
+                      flags:'r',
+                      autoClose:true,
+                      encoding:'utf8'
+                    })
+                    let ws = fs.createWriteStream('./test.html',{
+                      flags: 'w',
+                      highWaterMark: 3,
+                      encoding: 'utf8',
+                      autoClose: true,
+                      mode: 0o666,
+                    })
+                    rs.pipe(ws)
+                  })
+                })
+              })
+            }
+          })
+        }).on('error', (e) => {
+          console.error(`请求遇到问题: ${e.message}`)
+        })
+      }
+    })
+  }
+})
 network()
 
 //macOS窗口处理

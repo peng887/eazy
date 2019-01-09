@@ -1,11 +1,9 @@
-/*
-  * 这项目太乱了，还要做热更新，好吧，我写...热更新代码如下，html部分拜托后面的人重构吧
-*/
 const { electron, app, BrowserWindow,ipcMain } = require('electron')
 const path = require('path')
 const url = require('url')
 const fs = require('fs')
 const https = require('https')
+const stream = require('stream')
 const versionUrl = 'https://raw.githubusercontent.com/peng887/eazy/master/package.json'
 
 //创建窗口
@@ -25,30 +23,61 @@ app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
 app.on('ready',createWindow)
 
 //检查更新
-ipcMain.on('asynchronous-message', (event, arg) => {
-  if (arg) {
-    https.get(versionUrl,(res) => {
-      if (res.statusCode == 200) {
-        res.on("data",(data) => {
-          let versionOnline = JSON.parse(data.toString()).version
-          fs.readFile('./package.json',(err,res) => {
-            let versionOutline = JSON.parse(res.toString()).version
-            if (versionOnline != versionOutline) {
-              event.sender.send('asynchronous-reply', true)
-            } else {
-              event.sender.send('asynchronous-reply', false)
-            }
-          })
-        }).on('error', (e) => {
-          console.error(`请求遇到问题: ${e.message}`)
-        })
-      } else {
-        console.info(res.statusCode)
-      }
-    })
-  }
-})
+// ipcMain.on('asynchronous-message', (event, arg) => {
+//   if (arg) {
+//     https.get(versionUrl,(res) => {
+//       if (res.statusCode == 200) {
+//         res.on("data",(data) => {
+//           let versionOnline = JSON.parse(data.toString()).version
+//           fs.readFile('./package.json',(err,res) => {
+//             let versionOutline = JSON.parse(res.toString()).version
+//             if (versionOnline != versionOutline) {
+//               event.sender.send('asynchronous-reply', true)
+//             } else {
+//               event.sender.send('asynchronous-reply', false)
+//             }
+//           })
+//         }).on('error', (e) => {
+//           console.error(`请求遇到问题: ${e.message}`)
+//         })
+//       } else {
+//         console.info(res.statusCode)
+//       }
+//     })
+//   }
+// })
 
+//确认更新
+// ipcMain.on('asynchronous-ok', (event, arg) => {
+//   if (arg) {
+//     https.get(versionUrl, (res) => {
+//       event.sender.send('asynchronous-re', true)
+//       if (res.statusCode == 200) {
+//         res.on("data", (data) => {
+//           let versionOnline = JSON.parse(data.toString()).version
+//           let updateInfo = JSON.parse(data.toString()).updateInfo
+//           updateInfo.map((item, i) => {
+//             if (item.version == versionOnline) {
+//               item.files.map((file, i) => {
+//                 https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
+//                   res.on("data", (data) => {
+//                     console.info(data.toString())
+//                     let rs = fs.createReadStream(data)
+//                     rs.close()
+//                     let ws = fs.createWriteStream('./test.html')
+//                     rs.pipe(ws)
+//                   })
+//                 })
+//               })
+//             }
+//           })
+//         }).on('error', (e) => {
+//           console.error(`请求遇到问题: ${e.message}`)
+//         })
+//       }
+//     })
+//   }
+// })
 network()
 
 //macOS窗口处理
@@ -83,6 +112,5 @@ function network () {
   })
 }
 /*
-  * 热更新end
   * Author:peng
 */

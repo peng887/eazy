@@ -108,11 +108,7 @@ margin-left: 20px;
                     </div>
                 </div>
             </div>
-
-
-
         </div>
-
     </div>
 
     <div class="webs_topest " :class="{'web_show':currentCurriculum}">
@@ -192,7 +188,7 @@ margin-left: 20px;
 
                  $.ajax({
                      type: 'POST',
-                     url: "https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/getCurriculum.do",
+                     url: "https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/getCurriculum.do",
                      data: {
                        paging:that.data.pageIndex,
                        teacher_id:that.teacher_id
@@ -219,7 +215,7 @@ margin-left: 20px;
                 {
                     $.ajax({
                         type: 'POST',
-                        url: "https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/signOut.do",
+                        url: "https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/signOut.do",
                         dataType: 'json',
                         success: function (res) {
                             if (res.state == 1){
@@ -250,7 +246,7 @@ margin-left: 20px;
                     var that = this;
 					$.ajax({  //限制是否能点击
 						type:"post",
-						url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/hint.do",
+						url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/hint.do",
 						data:{
 							curriculum_id:item.curriculum_id
 						},
@@ -261,7 +257,7 @@ margin-left: 20px;
 								if(item.curriculumState == 1){  //is not my--default do↓
 								  $.ajax({
 									type:'get',
-									url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/updateCurriculum.do",
+									url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/updateCurriculum.do",
 									dataType: 'json',
 									data:{
 									  curriculumState:item.curriculumState,
@@ -296,21 +292,6 @@ margin-left: 20px;
                     that.buryingPoint(type)
                     that.currentCurriculumbegin = true;
                     window.location.href = "begin_class.html?curriculumId="+that.curriculumId;
-                    // $.ajax({
-                    //     type: 'POST',
-                    //     url: "https://www.ziqiangzili.com/"+largeRouteDo+"/collectFour/addCollectFour.do",
-                    //     dataType: 'json',
-                    //     data:{
-                    //         curriculum_id:that.curriculumId,
-                    //         type:0
-                    //     },
-                    //     success: function (res) {
-                    //        console.log(res)
-                    //     },
-                    //     error: function (res) {
-                    //         console.log(res)
-                    //     }
-                    // });
                 },
                 /**
                  *  进入智控课堂，生成通讯链接二维码
@@ -327,7 +308,7 @@ margin-left: 20px;
                     console.log(this.curriculumId,this.teacher_id)
                     $.ajax({
                         type: 'POST',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/Point/BuildPoint.do",
                         data: {role:1,curriculum_id:this.curriculumId,type:type},
                         dataType: 'json',
                         success: function (res) {

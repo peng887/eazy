@@ -185,18 +185,13 @@ color: #333;
                 <div class="webs_yike"><img src="../classroom_img/LOGO.png" alt=""/></div>
                 <div class="webs_class"><img src="../classroom_img/LOGOwenzi.png" alt=""/></div>
             </div>
-
             <div class="webs_behind weui-flex flex-ali_i_center">
-                <!--<img src="../img/geren.png" alt=""/>-->
-                <!--<p class="webs_authority" @click="webs_authority">欢迎老师!</p>-->
                 <button class="webs_exit red" @click="webs_location">排课计划</button>
                 <button class="webs_exit red" @click="webs_service">客服咨询</button>
                 <button style="margin-left:40px;" class="webs_exit" @click="webs_exit"> 退出</button>
                 <div class="webs_personal web_hide" :class="{'web_show':!personal}">
                     <img src="../classroom_img/touxiang.png" alt=""/>
                     <div class="webs_align">
-                        <!--<p>姓名:</p>-->
-                        <!--<p>学校: </p>-->
                     </div>
                 </div>
             </div>
@@ -243,41 +238,17 @@ color: #333;
                 <p>您暂时没有激活的课程，请到易练字小程序我的课程进行激活～</p>
             </div>
             <div class="web_cont_box weui-flex__item web_hide newWeb_box" :class="{web_show:isdata == 1}">
-
-                <!-- <div class="webs_system" v-for="(im,index) in couresData" v-if="index!=0">
-                    <label class="webs_mes" @click="webs_mes(index)">{{im.edition}}</label>
-                    <span class="webs_change js_webs_change" @click="webs_change(index)" v-if="im.data!=''"><img
-                            src="../classroom_img/xia.png" alt=""/></span>
-
-                    <div class="webs_cover" v-if="im.data!=''" :class="js_chang==index?'web_show':''">
-                        <label class="webs_text" v-for="ite in im.data">{{ite.character}}</label>
-                        <span class="webs_changes" @click="webs_changes"><img src="../classroom_img/shang.png" alt=""/></span>
-                    </div>
-
-
-                    <div class="table-title">{{im.edition}}</div>
-                    <div v-show="item.fontList.length>0" class="table-list" >
-                        <span v-for="ite in im.data">{{ite.character}}</span>
-                    </div>
-                </div> -->
-
                 <!-- 新样式-->
                 <ul class="newWeb">
-                    <li v-for="(im,index) in couresData" v-if="index!=0" @click="webs_mes(index)">
+                    <li v-for="(im,index) in couresData" v-if="index!=0" @click="webs_mes(im,index)">
                         <div class="table-title">{{im.edition}}</div>
                         <div v-if="im.data!=''" class="table-list" >
                             <span v-for="ite in im.data" class="newWebItem">{{ite.character}}</span>
                         </div>
                     </li>
                 </ul>
-
-
             </div>
-            <!-- <div class="webs_location" @click="webs_location"><button>排课计划</button></div>
-            <div class="webs_service" @click="webs_service"><button>客服咨询</button></div> -->
             <div class="" v-show="dialogVisible">
-
-
             <el-dialog
                 :visible.sync="dialogVisible"
                 width="32%"
@@ -392,7 +363,8 @@ color: #333;
                 },
                 dialogVisible:false,
                 teachMaterial:45,
-                role:1
+                role:1,
+                material_id:""
             },
             mounted: function () {
                 var that = this;
@@ -411,7 +383,7 @@ color: #333;
                 _sTestingProcess();
                 $.ajax({
                     type: 'POST',
-                    url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getEdition.do",
+                    url: "https://www.shenbiyilian.com/" + largeRouteDo + "/getEdition.do",
                     data: {teacher_id: that.teacher_id},
                     dataType: 'json',
                     success: function (res) {
@@ -424,7 +396,7 @@ color: #333;
                                 //获取课程列表
                                 $.ajax({
                                     type: 'POST',
-                                    url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getMate.do",
+                                    url: "https://www.shenbiyilian.com/" + largeRouteDo + "/getMate.do",
                                     data: {teacher_id: that.teacher_id, pid: that.pid},
                                     dataType: 'json',
                                     success: function (res) {
@@ -462,7 +434,7 @@ color: #333;
                 function _selectFirst(newQuestion) {
                     $.ajax({
                         type: 'GET',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/selectZi.do",
                         data: {pid: newQuestion},
                         dataType: 'json',
                         success: function (ress) {
@@ -499,7 +471,7 @@ color: #333;
                 function _sTestingProcess() {
                     $.ajax({
                         type: 'GET',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/ejectCurriculum.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/ejectCurriculum.do",
                         dataType: 'json',
                         data: {teacher_id: teacher_id},
                         success: function (res) {
@@ -535,7 +507,7 @@ color: #333;
                     var that = this;
                     $.ajax({
                         type: 'GET',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/selectZi.do",
                         data: {pid: newQuestion},
                         dataType: 'json',
                         success: function (ress) {
@@ -577,7 +549,7 @@ color: #333;
                     that.pindex = e.srcElement.selectedIndex;
                     $.ajax({
                         type: 'POST',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/getMate.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/getMate.do",
                         data: {pid: that.pid,teacher_id: that.teacher_id},
                         dataType: 'json',
                         success: function (res) {
@@ -604,7 +576,7 @@ color: #333;
                     var data = {pid: newQuestion};
                     $.ajax({
                         type: 'GET',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/selectZi.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/selectZi.do",
                         data: {pid: newQuestion},
                         dataType: 'json',
                         success: function (res) {
@@ -637,7 +609,7 @@ color: #333;
                 webs_exit: function () {
                     $.ajax({
                         type: 'POST',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/teacher/signOut.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/signOut.do",
                         dataType: 'json',
                         success: function (res) {
                             if (res.state == 1) {
@@ -652,10 +624,11 @@ color: #333;
                 /**
                  * 点击标题显示是否上课弹窗
                  */
-                webs_mes: function (index) {
+                webs_mes: function (im,index) {
                     var that = this;
                     that.currentCurriculum = true;
                     js_webs_systemText = that.couresData[index];
+                    that.material_id = im.material_id
                 },
                 /**
                  * 点击标题右侧的向下，弹出该课程的字
@@ -695,7 +668,7 @@ color: #333;
                     console.log(this.teachMaterial,this.role,this.pid,this.teacher_id)
                     $.ajax({
                         type: 'POST',
-                        url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
+                        url: "https://www.shenbiyilian.com/" + largeRouteDo + "/Point/BuildPoint.do",
                         data: {pid: this.pid,role:this.role,mid:this.teachMaterial,teacher_id:this.teacher_id,type:type},
                         dataType: 'json',
                         success: function (res) {
@@ -732,19 +705,9 @@ color: #333;
                  */
                 webs_authority: function () {
                     this.personal = !this.personal;
-                },
-                /**
-                 * 课程字后面的收回按钮
-                 */
-                // webs_changes: function () {
-                //     this.js_chang = false
-                // }
+                }
             }
         });
-
-        // $('#selectedclass option').eq(0).attr('selected','selected');
-
-
     });
 </script>
 </html>

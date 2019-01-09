@@ -99,24 +99,23 @@
     <div class="right_shuimo">
         <img src="../classroom_img/shuimo2.png" alt="">
     </div>
-    <el-dialog
+    <!--热更新提示-->
+    <!-- <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
       width="30%">
-      <span>这是一段信息</span>
+      <span>有更新！确认更新吗？</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
 </div>
 <span class="version">书写中国-v1.5.0</span>
 </body>
 <script>
 //热更新
 const { ipcRenderer } = require('electron')
-const https = require('https')
-const versionUrl = 'https://raw.githubusercontent.com/peng887/eazy/master/package.json'
 
 //监听网络
 const updateOnlineStatus = () => {
@@ -125,50 +124,37 @@ const updateOnlineStatus = () => {
 window.addEventListener('online',  updateOnlineStatus)
 window.addEventListener('offline',  updateOnlineStatus)
 updateOnlineStatus()
-
-ipcRenderer.on('asynchronous-reply', (event, arg) => {
-  if (arg) {
-    this.dialogVisible = true
-  } else {
-    console.info("没有更新")
-  }
-}).send('asynchronous-message', true)
-
-new Vue({
-  el:"#app",
-  data:{
-    dialogVisible:false
-  },
-  methods:{
-    confirm () {
-      this.dialogVisible = false
-      const loading = this.$loading({
-        lock: true,
-        text: '正在更新应用程序...',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.8)'
-      })
-      https.get(versionUrl, (res) => {
-        loading.close()
-        if (res.statusCode == 200) {
-          res.on("data", (data) => {
-            let versionOnline = JSON.parse(data.toString()).version
-            let updateInfo = JSON.parse(data.toString()).updateInfo
-            updateInfo.map((item, i) => {
-              if (item.version == versionOnline) {
-                console.info(item.detail)
-              }
-            })
-          }).on('error', (e) => {
-            console.error(`请求遇到问题: ${e.message}`)
-          })
-        }
-      })
-    }
-  }
-})
+//热更新
+// new Vue({
+//   el:"#app",
+//   data:{
+//     dialogVisible:false
+//   },
+//   mounted () {
+//     ipcRenderer.on('asynchronous-reply', (event, arg) => {
+//       if (arg) {
+//         this.dialogVisible = true
+//       }
+//     }).send('asynchronous-message', true)
+//   },
+//   methods:{
+//     confirm () {
+//       this.dialogVisible = false
+//       const loading = this.$loading({
+//         lock: true,
+//         text: '正在更新应用程序...',
+//         spinner: 'el-icon-loading',
+//         background: 'rgba(0, 0, 0, 0.8)'
+//       })
+//       ipcRenderer.on('asynchronous-re', (event, arg) => {
+//         if (arg) {
+//           loading.close()
+//         }
+//       }).send('asynchronous-ok', true)
+//     }
+//   }
+// })
 /*
-  * 热更新end
   * Author:peng
 */
 
@@ -199,7 +185,7 @@ new Vue({
             }else {
                 $.ajax({
                     type:"POST",
-                    url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/falselogin.do",
+                    url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/falselogin.do",
                     dataType:"json",
                     data:{phoneNumber:str},
                     success:function(msg){
@@ -227,7 +213,7 @@ new Vue({
                 }else {
                     $.ajax({
                         type:"POST",
-                        url:"https://www.ziqiangzili.com/"+largeRouteDo+"/teacher/falselogin.do",
+                        url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/falselogin.do",
                         dataType:"json",
                         data:{phoneNumber:str},
                         success:function(msg){

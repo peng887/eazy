@@ -61,10 +61,10 @@ ipcMain.on('asynchronous-ok', (event, arg) => {
             if (item.version == versionOnline) {
               item.files.map((file, i) => {
                 https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
+                  let result
                   res.on("data", (data) => {
-                    const buf = Buffer.from(data)
-                    console.info(buf)
-                    fs.WriteFileSync('./test.html',buf)
+                    result += data
+                    fs.writeFileSync('./test.html', result)
                   })
                 })
               })

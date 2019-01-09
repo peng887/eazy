@@ -1,0 +1,257 @@
+undefined<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>书写中国 | 易练字</title>
+    <link href="/classroom_img/favicon.ico" rel="shortcut icon" />
+    <link rel="stylesheet" href="../bower_components/weui/dist/style/weui.css"/>
+    <link rel="stylesheet" href="../bower_components/weui/dist/example/example.css"/>
+    <link rel="stylesheet" href="../classroom_css/public.css">
+    <link rel="stylesheet" href="../classroom_css/home_page.css">
+
+    <script src="../classroom_js/route.js"></script>
+    <script src="../bower_components/weui/dist/example/zepto.min.js"></script>
+    <script src="../bower_components/weui.js/dist/weui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="../classroom_js/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="../classroom_js/utf.js"></script>
+    <script type="text/javascript" src="../classroom_js/jquery.qrcode.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style media="screen">
+      .version{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        font-size: 12px;
+        padding:2px 5px;
+        color: #888;
+      }
+      button{
+        width: auto;
+        height: auto;
+        margin-top: 0;
+      }
+      .el-button--primary{
+        background: #f55d5d;
+        border-color: #f55d5d;
+      }
+      .el-button--primary:hover{
+        background: #f55d5d;
+        border-color: #f55d5d;
+      }
+      .el-loading-spinner i{
+        color: #fff;
+      }
+      .el-loading-spinner .el-loading-text{
+        color: #fff;
+      }
+    </style>
+</head>
+<body>
+
+<div class="web_box weui-flex" id="app">
+    <div class="left_shuimo">
+        <div class="left_shuimo_image">
+            <div class="left_shuimo_img">
+                <img src="../classroom_img/shuimo1.png" alt="">
+            </div>
+            <div style="opacity: 0;" >
+                <img src="../classroom_img/shuimo1.png" alt="">
+            </div>
+            <div style="opacity: 0;" >
+                <img src="../classroom_img/shuimo1.png" alt="">
+            </div>
+
+        </div>
+
+    </div>
+    <div class="webs_home_page">
+        <div class="webs_logo"><img src="../classroom_img/BLOGO.png" alt=""/></div>
+
+        <div class="webs_center weui-flex weui-flex__item flex_column">
+            <div class="webs_login">账号登录</div>
+            <input class="webs_tel" id="iPhoneNumber" type="text" placeholder="手机号码">
+            <button id="loginButton">登录</button>
+        </div>
+
+        <div class="webs_scan">
+            <div class="web_code qrcodeCanvas"></div>
+            <div class="webs_logins" id="webs_logins">扫码登录</div>
+        </div>
+
+        <div class="webs_qr_code weui-flex">
+            <div>
+              <div class="codeImgWrap">
+                <img src="../classroom_img/SEWM.png" alt=""/>
+              </div>
+              <p>易练字小程序</p></div>
+            <div>
+              <div class="codeImgWrap">
+                <img src="../classroom_img/zeweima.png" alt=""/>
+              </div>
+
+              <p>书写中国公众号</p>
+            </div>
+        </div>
+    </div>
+    <div class="right_shuimo">
+        <img src="../classroom_img/shuimo2.png" alt="">
+    </div>
+    <!--热更新提示-->
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%">
+      <span>有更新！确认更新吗？</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+      </span>
+    </el-dialog>
+</div>
+<span class="version">书写中国-v1.5.0</span>
+</body>
+<script>
+//热更新
+const { ipcRenderer } = require('electron')
+
+//监听网络
+const updateOnlineStatus = () => {
+  ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
+}
+window.addEventListener('online',  updateOnlineStatus)
+window.addEventListener('offline',  updateOnlineStatus)
+updateOnlineStatus()
+//热更新
+new Vue({
+  el:"#app",
+  data:{
+    dialogVisible:false
+  },
+  mounted () {
+    ipcRenderer.on('asynchronous-reply', (event, arg) => {
+      if (arg) {
+        console.info(arg+'=====有更新')
+        this.dialogVisible = true
+      }
+    }).send('asynchronous-message', true)
+  },
+  methods:{
+    confirm () {
+      this.dialogVisible = false
+      const loading = this.$loading({
+        lock: true,
+        text: '正在更新应用程序...',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.8)'
+      })
+      ipcRenderer.on('asynchronous-re', (event, arg) => {
+        if (arg) {
+          loading.close()
+        }
+      }).send('asynchronous-ok', true)
+    }
+  }
+})
+/*
+  * Author:peng
+*/
+
+
+
+
+
+
+
+
+
+
+
+        var input;
+        var timer;
+        var _hmt = _hmt || [];
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+
+        $('#loginButton').click(function(){
+            var str = $("#iPhoneNumber").val();
+            if (str == null || str == "") {
+                alert("请输入手机号！");
+            }else if (str.length > 11 || str.length < 11){
+                alert("手机号不合法")
+            }else {
+                $.ajax({
+                    type:"POST",
+                    url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/falselogin.do",
+                    dataType:"json",
+                    data:{phoneNumber:str},
+                    success:function(msg){
+                        console.log(msg);
+                        if (msg.state == 1){
+                            // sessionStorage.teacher_id = msg.data;
+                            sessionStorage.setItem("teacher_id",msg.data);
+                            // window.location.href = "curriculums_table.html?teacher_id="+msg.data;
+                            window.location.href = "curriculums_table.html"
+                        } else {
+                            alert(msg.data)
+                        }
+                    }
+                })
+            }
+        })
+
+        $('#iPhoneNumber').keyup(function(event){
+            if(event.keyCode ==13){
+                var str = $("#iPhoneNumber").val();
+                if (str == null || str == "") {
+                    alert("请输入手机号！");
+                }else if (str.length > 11 || str.length < 11){
+                    alert("手机号不合法")
+                }else {
+                    $.ajax({
+                        type:"POST",
+                        url:"https://www.shenbiyilian.com/"+largeRouteDo+"/teacher/falselogin.do",
+                        dataType:"json",
+                        data:{phoneNumber:str},
+                        success:function(msg){
+                            console.log(msg);
+                            if (msg.state == 1){
+                                sessionStorage.setItem("teacher_id",msg.data);
+                                window.location.href = "curriculums_table.html";
+                            } else {
+
+                                alert(msg.data)
+                            }
+                        }
+                    })
+                }
+            }
+        })
+
+
+        function _ajax(url,input)
+        {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data:{phoneNumber:input} ,
+                dataType: "json",
+                success:function(data)
+                {
+                    if(data.state === 1)
+                    {
+                        clearTimeout(timer);
+                        window.location.href = "curriculums_table.html"
+                    }
+                },
+                error:function(res)
+                {
+                }
+            });
+        }
+</script>
+</html>

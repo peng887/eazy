@@ -25,6 +25,7 @@ app.on('ready',createWindow)
 //检查更新
 ipcMain.on('asynchronous-message', (event, arg) => {
   if (arg) {
+    console.info(arg+"=====检查更新...")
     https.get(versionUrl,(res) => {
       if (res.statusCode == 200) {
         res.on("data",(data) => {
@@ -61,20 +62,9 @@ ipcMain.on('asynchronous-ok', (event, arg) => {
               item.files.map((file, i) => {
                 https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
                   res.on("data", (data) => {
-                    let rs = fs.createReadStream(data, {
-                      highWaterMark: 1,
-                      flags:'r',
-                      autoClose:true,
-                      encoding:'utf8'
-                    })
-                    let ws = fs.createWriteStream('./test.html',{
-                      flags: 'w',
-                      highWaterMark: 3,
-                      encoding: 'utf8',
-                      autoClose: true,
-                      mode: 0o666,
-                    })
-                    rs.pipe(ws)
+                    const buf = Buffer.from(data)
+                    console.info(buf)
+                    fs.WriteFileSync('./test.html',buf)
                   })
                 })
               })

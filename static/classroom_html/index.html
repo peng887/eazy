@@ -133,6 +133,7 @@ new Vue({
   mounted () {
     ipcRenderer.on('asynchronous-reply', (event, arg) => {
       if (arg) {
+        console.info(arg+'=====有更新')
         this.dialogVisible = true
       }
     }).send('asynchronous-message', true)

@@ -1,16 +1,11 @@
 {
   "name": "Easy",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "updateInfo":[
     {
       "version":"1.0.1",
       "files":[],
       "detail":["项目上线"]
-    },
-    {
-      "version":"1.0.2",
-      "files":["index.html"],
-      "detail":["首页bug修改！～"]
     }
   ],
   "main": "main.js",

@@ -61,14 +61,10 @@ ipcMain.on('asynchronous-ok', (event, arg) => {
             if (item.version == versionOnline) {
               item.files.map((file, i) => {
                 https.get("https://raw.githubusercontent.com/peng887/eazy/master/static/classroom_html/"+file,(res) => {
-                // https.get("http://vali.cp31.ott.cibntv.net/youku/6572685cd993c7182df565736/03000801005C233CE2DBB08003E880DE8AFA5E-BF9A-443F-98C6-E0D91B72C5AF.mp4?sid=054702800100010002186_00_A7aa4e626b51d7d1b41062649fa0ca59a&sign=3f9bd29bf0ae795f9ab429fe411a5471&ctype=50",(res) => {
-                  let result
+                  let result = ""
                   res.on("data", (data) => {
                     result += data
-                    let rs = fs.createReadStream(result)
-                    let ws = fs.createWriteStream('./test1.html')
-                    rs.pipe(ws)
-                    // fs.writeFileSync('./test.html', result)
+                    fs.writeFileSync('./write.html', result)
                   })
                 })
               })

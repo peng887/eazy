@@ -186,7 +186,7 @@ color: #333;
                 <div class="webs_class"><img src="../classroom_img/LOGOwenzi.png" alt=""/></div>
             </div>
             <div class="webs_behind weui-flex flex-ali_i_center">
-                <button class="webs_exit red" @click="webs_location">排课计划</button>
+                <!-- <button class="webs_exit red" @click="webs_location">排课计划</button> -->
                 <button class="webs_exit red" @click="webs_service">客服咨询</button>
                 <button style="margin-left:40px;" class="webs_exit" @click="webs_exit"> 退出</button>
                 <div class="webs_personal web_hide" :class="{'web_show':!personal}">
@@ -293,7 +293,6 @@ color: #333;
                     <p>授课班级: {{processData.lectureClasses}}</p>
                     <div class="btnWrap">
                       <span class="webs_start webs_starts marginRight30" @click="js_webs_start">开始讲课</span>
-                      <!-- webs_intelligence webs_ar -->
                       <span class="webs_start webs_starts" @click="js_webs_intelligence">智控课堂</span>
                     </div>
 
@@ -376,10 +375,7 @@ color: #333;
                 }else{
                     var teacher_id = sessionStorage.getItem("teacher_id")
                 }
-
                 that.teacher_id = teacher_id;
-                // var teacher_id = canshu.split("-");
-
                 _sTestingProcess();
                 $.ajax({
                     type: 'POST',
@@ -413,7 +409,6 @@ color: #333;
                                     }
                                 })
                                 //获取课程结束
-
                             }
 
                         }else if(res.state == 0){
@@ -442,27 +437,17 @@ color: #333;
                             if (ress.state === 1) {
                                 if (ress.data != null) {
                                     that.couresData = ress.data;
-                                    // console.log(this.couresData)
-
                                     that.selece = that.classData[0].material_id;
-                                    // //console.log('====='+that.classData[0].edition)
                                 }
-
-
                             } else if (ress.state === 0) {
                                 alert("请求失败")
                             }
-                            // else if (ress.state === 2) {
-                            //     alert("登陆过期，请重新登录");
-                            //     window.location.href = 'home_page.html';
-                            // }
                         },
                         error: function (ress) {
                         }
                     });
 
                 };
-
                 /**
                  * 检测排课信息
                  *
@@ -487,10 +472,6 @@ color: #333;
                             } else if (res.state === 0) {
 
                             }
-                            // else if (res.state === 2) {
-                            //     alert("登陆过期，请重新登录");
-                            //     window.location.href = 'home_page.html';
-                            // }
                         },
                         error: function (res) {
                             console.log("error::" + res)
@@ -523,10 +504,6 @@ color: #333;
                             } else if (ress.state === 0) {
                                 alert("请求失败")
                             }
-                            // else if (ress.state === 2) {
-                            //     alert("登陆过期，请重新登录");
-                            //     window.location.href = 'home_page.html';
-                            // }
                         },
                         error: function (ress) {
                         }
@@ -585,10 +562,6 @@ color: #333;
                             } else if (res.state === 0) {
                                 console.log("请求失败")
                             }
-                            // else if (res.state === 2) {
-                            //     alert("登陆过期，请重新登录");
-                            //     window.location.href = 'home_page.html';
-                            // }
                         },
                         error: function (res) {
                         }
@@ -628,7 +601,9 @@ color: #333;
                     var that = this;
                     that.currentCurriculum = true;
                     js_webs_systemText = that.couresData[index];
+                    console.info(im)
                     that.material_id = im.material_id
+                    console.info(that.material_id)
                 },
                 /**
                  * 点击标题右侧的向下，弹出该课程的字
@@ -656,12 +631,14 @@ color: #333;
                  *  进入智控课堂，生成通讯链接二维码
                  */
                 js_webs_intelligence: function () {
+
                     var that = this;
+                    console.info(that.material_id)
                     var type = 1
                     that.buryingPoint(type)
                     js_webs_systemText['pjcid'] = that.pid;
                     sessionStorage.setItem("js_webs_systemText", JSON.stringify(js_webs_systemText));
-                    window.location.href = "js_video_begin_class.html?teacher_id=" + that.teacher_id;
+                    window.location.href = "js_video_begin_class.html?teacher_id=" + that.teacher_id+"&classId="+that.material_id;
                 },
                 // 埋点方法
                 buryingPoint:function(type) {
@@ -689,10 +666,10 @@ color: #333;
                 /**
                  *  跳转到排课计划
                  */
-                webs_location: function () {
-                    var that = this;
-                    window.location.href = 'curriculum_arrangement_plan_large.html';
-                },
+                // webs_location: function () {
+                //     var that = this;
+                //     window.location.href = 'curriculum_arrangement_plan_large.html';
+                // },
                 // 跳转到客服二维码
                 webs_service:function () {
                     this.dialogVisible = true

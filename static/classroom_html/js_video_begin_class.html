@@ -22,14 +22,6 @@
     <script type="text/javascript" src="../classroom_js/jquery.qrcode.js"></script>
     <script src="../classroom_js/base64.js"></script>
     <script>
-        var _hmt = _hmt || [];
-        (function() {
-          var hm = document.createElement("script");
-          hm.src = "https://hm.baidu.com/hm.js?0a299446502db413b12e2bcea3f792e5";
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(hm, s);
-        })();
-
         const { ipcRenderer } = require('electron')
         const updateOnlineStatus = () => {
           ipcRenderer.send('online-status-changed', navigator.onLine ? true : false)
@@ -162,7 +154,9 @@
                 var that = this;
 
                 var href = window.location.href;
-                var teacher_id = href.split('=')[1].split('-')[0]
+                var teacher_id = href.split('=')[1].split('&')[0]
+                that.classId = window.location.search.split('=').pop()
+                console.info(that.classId)
                 var curriculumId = href.split('=')[1].split('-')[2]
                 console.log(href)
                 console.log(teacher_id)
@@ -211,15 +205,13 @@
                 if (that.userId !== "") {
                     $(".qrcodeCanvas").qrcode({
                         render: "canvas",    //设置渲染方式，有table和canvas，使用canvas方式渲染性能相对来说比较好
-                        text: "错误码-"+that.userId+"-请进入易练字小程序扫码",
-                        // text: "错误码-"+that.userId+"-"+curriculumId+"-请进入易练字小程序扫码",       //扫描二维码后显示的内容,可以直接填一个网址，扫描二维码后自动跳向该链接
+                        text: "错误码-"+that.userId+"-"+that.classId+"-请进入易练字小程序扫码",
                         width: "155",               //二维码的宽度
                         height: "155",              //二维码的高度
                         background: "#fff",       //二维码的后景色
                         foreground: "#000000",    //二维码的前景色
                         src: '../classroom_img/2wem.png'             //二维码中间的图片
                     });
-
 
                     //websocket初始化
                     $('.webs_topest').addClass('web_show');
@@ -267,7 +259,6 @@
 
                 //隐藏
                 $('.hide_webs_hide_show').click(function () {
-                    //js_webs_left
                     that.methods.js_hide_webs_hide($(this));
                 })
                 //退出
@@ -283,7 +274,7 @@
             },
             methods: {
                 initWebpack: function (userid) {
-                    this.websock = new WebSocket("wss://www.ziqiangzili.com/ketang/websocket/" + userid);//这里面的this都指向vue
+                    this.websock = new WebSocket("wss://www.shenbiyilian.com/ketang/websocket/" + userid);//这里面的this都指向vue
                     this.websock.onopen = this.websocketopen;
                     this.websock.onmessage = this.websocketonmessage;
                     this.websock.onclose = this.websocketclose;
@@ -376,7 +367,7 @@
                             var charactertxt = that.jsonobj.words + "-文字书写";
                             let base64ss = new Base64()
                             charactertxt = base64ss.encode(charactertxt)
-                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.id+ '&teacher_id='+that.userId;
+                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
 
                             $('#shuxiev').show();
 
@@ -391,7 +382,7 @@
                                     $('.web_videos_jiegou').removeClass("webs_red");
                                     console.log(res)
                                     if (res.state == 1) {
-                                        myVideo.src(res.url);
+                                        myVideo.src(res.data.url);
                                         setTimeout(
                                             myVideo.play()// 视频播放
                                         ,500);
@@ -416,7 +407,7 @@
                             var charactertxt = that.jsonobj.words + "-文字结构";
                             let base64s = new Base64()
                             charactertxt = base64s.encode(charactertxt)
-                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.id+ '&teacher_id='+that.userId;
+                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
 
                             $('#shuxiev').show();
                             myVideo.pause();
@@ -431,7 +422,7 @@
                                     $('#shuxiev').show();
                                     console.log(res)
                                     if (res.state == 1) {
-                                        myVideo.src(res.url);
+                                        myVideo.src(res.data.url);
                                         setTimeout(
                                             myVideo.play()// 视频播放
                                             ,500);
@@ -586,7 +577,9 @@
                         // charactertxt = hex_md5(charactertxt).substr(8, 16);
                         let base64 = new Base64()
                         charactertxt = base64.encode(charactertxt)
-                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
+                        // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
+                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
+
                          // 埋点
                         that.buryingPoint(charactertxt,that.userId)
                         myVideo.pause();
@@ -603,7 +596,7 @@
                                 th.addClass("webs_red");
                                 console.log(res)
                                 if (res.state == 1) {
-                                    myVideo.src(res.url);
+                                    myVideo.src(res.data.url);
                                     myVideo.play();
                                     $(".vjs-control-bar").removeClass("hide");
                                     $("#shuxiev").removeClass("notclick")
@@ -653,7 +646,8 @@
                         let base64 = new Base64()
                         charactertxt = base64.encode(charactertxt)
                         // var play = 'https://www.shenbiyilian.com/' + largeRouteDo + '/auth_video.do?teacher_id=' + that.userId;
-                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
+                        // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
+                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
                         // 埋点
                         that.buryingPoint(charactertxt,that.userId)
                         myVideo.pause();
@@ -667,7 +661,7 @@
                                 th.addClass("webs_red");
                                 console.log(res)
                                 if (res.state == 1) {
-                                    myVideo.src(res.url);
+                                    myVideo.src(res.data.url);
                                     myVideo.play() // 视频播放
 
                                     $(".vjs-control-bar").removeClass("hide");

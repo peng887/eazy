@@ -5,4 +5,4 @@ var largeRouteDo = "ketang"  //gold
 // var largeRouteDo = "ceShiKeTang"
 
 
-var largeRouteDoVideo = "ketang"
+var largeRouteDoVideo = "video"

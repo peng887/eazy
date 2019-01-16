@@ -367,8 +367,8 @@
                             var charactertxt = that.jsonobj.words + "-文字书写";
                             let base64ss = new Base64()
                             charactertxt = base64ss.encode(charactertxt)
-                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
-
+                            // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
+                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.id+ '&teacher_id='+that.userId;
                             $('#shuxiev').show();
 
                             $.ajax({
@@ -407,8 +407,8 @@
                             var charactertxt = that.jsonobj.words + "-文字结构";
                             let base64s = new Base64()
                             charactertxt = base64s.encode(charactertxt)
-                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
-
+                            // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.classId;
+                            var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+that.jsonobj.id+ '&teacher_id='+that.userId;
                             $('#shuxiev').show();
                             myVideo.pause();
                             $.ajax({
@@ -577,8 +577,8 @@
                         // charactertxt = hex_md5(charactertxt).substr(8, 16);
                         let base64 = new Base64()
                         charactertxt = base64.encode(charactertxt)
-                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
-
+                        // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
+                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
                          // 埋点
                         that.buryingPoint(charactertxt,that.userId)
                         myVideo.pause();
@@ -644,7 +644,8 @@
                         var charactertxt = character + "-文字结构";
                         let base64 = new Base64()
                         charactertxt = base64.encode(charactertxt)
-                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
+                        // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+js_webs_systemText.material_id;
+                        var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt+character_id + '&teacher_id='+that.userId;
                         // 埋点
                         that.buryingPoint(charactertxt,that.userId)
                         myVideo.pause();

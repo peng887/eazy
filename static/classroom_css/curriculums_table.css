@@ -250,21 +250,21 @@ cursor: pointer;
 }
 .webs_reveal
 {
-    width: 464px;
-    height: 352px;
+        width: 464px;
+    height: 290px;
     background: white;
     margin: 0 auto;
     position: absolute;
     left: 50%;
     font-size: 24px;
     top: 50%;
-    transform:translate(-50%,-50%);
-    padding: 74px 62px 0 62px;
+    transform: translate(-50%,-50%);
+    padding: 70px 62px 0 62px;
     border-radius: 10px;
 }
 .webs_switch
 {
-    margin-top: 36px;
+    margin-top: 50px;
 }
 span.webs_start{
     width: 120px;
@@ -272,6 +272,8 @@ span.webs_start{
     line-height: 40px;
     font-size: 16px;
     border-radius: 10px;
+        margin: 0 auto;
+    display: block;
 }
 .start_left{ float: left;}
 .start_right{ float: right;}

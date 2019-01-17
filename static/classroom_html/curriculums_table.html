@@ -175,6 +175,9 @@ color: #333;
   color: #fff;
   border:none;
 }
+.el-loading-spinner .path{
+    stroke: #f55d5d;
+}
     </style>
 </head>
 <body>
@@ -237,7 +240,7 @@ color: #333;
                 <img src="../classroom_img/nolist.png" />
                 <p>您暂时没有激活的课程，请到易练字小程序我的课程进行激活～</p>
             </div>
-            <div class="web_cont_box weui-flex__item web_hide newWeb_box" :class="{web_show:isdata == 1}">
+            <div class="web_cont_box weui-flex__item web_hide newWeb_box" :class="{web_show:isdata == 1}" v-loading.fullscreen.lock="fullscreenLoading">
                 <!-- 新样式-->
                 <ul class="newWeb">
                     <li v-for="(im,index) in couresData" v-if="index!=0" @click="webs_mes(im,index)">
@@ -272,10 +275,10 @@ color: #333;
 
     <div class="webs_topest " :class="{'web_show':currentCurriculum}">
         <div class="webs_reveal">
-            <p style="font-size: 22px;padding-bottom: 30px;padding-top: 10px;">您是否准备讲课，直接讲课请点击 "开始讲课"。智控课堂请点击“智控课堂”按钮，获取二维码</p>
+            <p style="font-size: 22px;padding-top: 10px;">您是否准备讲课，直接讲课请点击 "开始讲课"。</p>
             <div class="webs_switch">
-                <span class="webs_start start_left" @click="js_webs_start">开始讲课</span>
-                <span class="webs_start start_right" @click="js_webs_intelligence">智控课堂</span>
+                <span class="webs_start" @click="js_webs_start">开始讲课</span>
+                <!-- <span class="webs_start start_right" @click="js_webs_intelligence">智控课堂</span> -->
                 <!-- webs_intelligence -->
                 <span class="webs_close" @click="webs_close"> <img src="../classroom_img/X.png" alt=""/></span>
                 <div class="webs_code">
@@ -311,6 +314,7 @@ color: #333;
         var app = new Vue({
             el: '#app',
             data: {
+                fullscreenLoading:false,
                 isdata:2,//是否激活
                 pid: 0,//教材id
                 pname: '',//教材名称
@@ -427,12 +431,14 @@ color: #333;
                  *
                  */
                 function _selectFirst(newQuestion) {
+                    that.fullscreenLoading = true
                     $.ajax({
                         type: 'GET',
                         url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/selectZi.do",
                         data: {pid: newQuestion},
                         dataType: 'json',
                         success: function (ress) {
+                            that.fullscreenLoading = false
                             console.log(ress)
                             if (ress.state === 1) {
                                 if (ress.data != null) {

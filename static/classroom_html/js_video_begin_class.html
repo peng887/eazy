@@ -274,7 +274,7 @@
             },
             methods: {
                 initWebpack: function (userid) {
-                    this.websock = new WebSocket("wss://www.shenbiyilian.com/ketang/websocket/" + userid);//这里面的this都指向vue
+                    this.websock = new WebSocket("wss://www.ziqiangzili.com/ketang/websocket/" + userid);//这里面的this都指向vue
                     this.websock.onopen = this.websocketopen;
                     this.websock.onmessage = this.websocketonmessage;
                     this.websock.onclose = this.websocketclose;

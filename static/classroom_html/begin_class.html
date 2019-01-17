@@ -72,8 +72,6 @@
         </div>
 
     </div>
-
-
     <div class="hide_webs_hide">
         <span class="hide_webs_hide_show">隐藏</span>
     </div>
@@ -293,7 +291,7 @@
                     // 埋点
                     that.buryingPoint(charactertxt,that.userId)
                     $.ajax({
-                        type: "GET",
+                        type: "post",
                         url: play,
                         dataType: "json",
                         success: function (res) {

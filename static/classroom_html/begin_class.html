@@ -230,9 +230,6 @@
                     app.scroll = index;
 
                     app.character_id = swst.data[index].character_id;
-                    console.log('========');
-                    console.log(app.character_id);
-                    console.log('========');
 
                     app.character = swst.data[index].character;
                     $(".web_videos").removeClass(" webs_red");
@@ -247,7 +244,6 @@
                  * 隐藏
                  * */
                 js_hide_webs_hide: function (event) {
-                    console.log(event);
 
                     if ($(".js_webs_left").is(":hidden")) {
                         $(".js_webs_left").show();
@@ -299,9 +295,9 @@
                             $('#shuxiev').show();
                             th.addClass("webs_red");
                             console.log(res)
-                            if (res.state == 1) {
+                            if (res.status == 1) {
 
-                                myVideo.src(res.data.url);
+                                myVideo.src(res.url);
                                 myVideo.play()
                                 $(".vjs-control-bar").removeClass("hide");
                                 $("#shuxiev").removeClass("notclick")
@@ -356,8 +352,8 @@
                                 $(".web_videos").removeClass(" webs_red");
                                 $('#shuxiev').show();
                                 th.addClass("webs_red");
-                                if(res.state == 1) {
-                                    myVideo.src(res.data.url);
+                                if(res.status == 1) {
+                                    myVideo.src(res.url);
                                     myVideo.play() // 视频播放
                                     $(".vjs-control-bar").removeClass("hide");
                                     $("#shuxiev").removeClass("notclick")
@@ -388,14 +384,12 @@
                         var role = 1
                         var curriculum_id = curriculumId
                     }
-                    console.log(charactertxt,teacher_id)
                     $.ajax({
                         type: 'POST',
                         url: "https://www.ziqiangzili.com/" + largeRouteDo + "/Point/BuildPoint.do",
                         data: {replace: charactertxt,teacher_id:teacher_id,role:role,type:0,curriculum_id:curriculum_id},
                         dataType: 'json',
                         success: function (res) {
-                            console.log(res)
                         },
                         error: function (res) {
                         }

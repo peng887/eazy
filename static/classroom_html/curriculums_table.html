@@ -431,14 +431,28 @@ color: #333;
                  *
                  */
                 function _selectFirst(newQuestion) {
-                    that.fullscreenLoading = true
+                    try {
+                      that.fullscreenLoading = true
+                    } catch (e) {
+
+                    } finally {
+
+                    }
+
                     $.ajax({
                         type: 'GET',
                         url: "https://www.shenbiyilian.com/" + largeRouteDo + "/teacher/selectZi.do",
                         data: {pid: newQuestion},
                         dataType: 'json',
                         success: function (ress) {
+                          try {
                             that.fullscreenLoading = false
+                          } catch (e) {
+
+                          } finally {
+
+                          }
+
                             console.log(ress)
                             if (ress.state === 1) {
                                 if (ress.data != null) {

@@ -216,7 +216,6 @@
                  * */
                 js_character: function (event, index, swst, cid, th,type) {
                     var that = this;
-                    console.log(type)
                     if(type == 0){
                       $('.web_videos_shuxie').hide();
                       $('.web_videos_jiegou').html("播放视频")
@@ -275,13 +274,9 @@
                         that.pjcid = js_webs_systemText.pjcid;
                         that.pid = js_webs_systemText.pid;
                         that.userId = teacher_id;
-                        console.log(js_webs_systemText);
-
                     var charactertxt = character + "-文字书写";
                     let base64 = new Base64()
                     charactertxt = base64.encode(charactertxt)
-                    console.info(charactertxt)
-                    console.log(app.typeId)
                     // var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt + js_webs_systemText.material_id
                     var play = 'https://www.shenbiyilian.com/' + largeRouteDoVideo + '/palyVideo.do?replace=' + charactertxt + character_id + '&teacher_id='+that.userId;
                     // 埋点
@@ -294,7 +289,6 @@
                             $(".web_videos").removeClass(" webs_red");
                             $('#shuxiev').show();
                             th.addClass("webs_red");
-                            console.log(res)
                             if (res.status == 1) {
 
                                 myVideo.src(res.url);
@@ -304,7 +298,6 @@
 
                                 //myVideo.play() // 视频播放
                                 myVideo.on('ended', function () {
-                                   console.log('结束播放');
                                    $(".vjs-control-bar").addClass("hide");
                                    $("#shuxiev").addClass("notclick")
                                });
@@ -318,7 +311,6 @@
                  * 结构
                  * */
                 js_jiegou: function (th, character_id, character) {
-                    console.info(th,character_id,character)
                     var that = this;
                     $('.loading_parcel').addClass('web_show');
 
@@ -334,8 +326,6 @@
                         that.pjcid = js_webs_systemText.pjcid;
                         that.pid = js_webs_systemText.pid;
                         that.userId = teacher_id;
-                        console.log(js_webs_systemText);
-
                         var charactertxt = character + "-文字结构";
                         let base64 = new Base64()
                         charactertxt = base64.encode(charactertxt)
@@ -348,7 +338,6 @@
                             url: play,
                             dataType: "json",
                             success: function (res) {
-                                console.log(res.url)
                                 $(".web_videos").removeClass(" webs_red");
                                 $('#shuxiev').show();
                                 th.addClass("webs_red");
@@ -359,7 +348,6 @@
                                     $("#shuxiev").removeClass("notclick")
 
                                     myVideo.on('ended', function () {
-                                       console.log('结束播放');
                                         $(".vjs-control-bar").addClass("hide");
                                         $("#shuxiev").addClass("notclick")
                                      });
@@ -377,7 +365,6 @@
                 buryingPoint:function(charactertxt,teacher_id) {
                     var href = window.location.href;
                     var curriculumId = href.substr(href.indexOf("=") + 1);
-                    console.log(curriculumId.length)
                     if(curriculumId.length > 10) {
                         var role = 0
                     }else {
